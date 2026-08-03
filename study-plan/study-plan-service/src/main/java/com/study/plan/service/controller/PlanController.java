@@ -1,6 +1,6 @@
 package com.study.plan.service.controller;
 
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import com.study.plan.api.PlanApi;
 import com.study.plan.api.dto.CheckInRequest;
 import com.study.plan.api.dto.ExamPlanCreateRequest;
@@ -29,7 +29,7 @@ public class PlanController implements PlanApi {
     @Override
     @GetMapping("/plans/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.PLAN, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.PLAN, "status", "UP"));
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.study.common.core.utils;
 
 import com.fasterxml.jackson.databind.JavaType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -13,7 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.charset.Charset;
@@ -21,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class RestInterface {
 
@@ -257,22 +260,22 @@ public class RestInterface {
             throw new RestClientException("request url can not blank");
         }
         if (url.indexOf(' ') >= 0) {
-            LogHelper.writeInfo("url中含有空格，现将空格转换为20%，以便能正常执行请求");
+            log.info("url中含有空格，现将空格转换为20%，以便能正常执行请求");
             url = url.replaceAll(" ", "20%");
         }
         try {
-            LogHelper.writeInfo("request: " + url + " ,method: " + method.name() + " ,header: " + httpEntity.getHeaders() + " ,body: " + httpEntity.getBody());
+            log.info("request: " + url + " ,method: " + method.name() + " ,header: " + httpEntity.getHeaders() + " ,body: " + httpEntity.getBody());
             long start = System.currentTimeMillis();
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, method, httpEntity, String.class);
             long spent = System.currentTimeMillis() - start;
             HttpStatus status = responseEntity.getStatusCode();
             String res = responseEntity.getBody();
-            LogHelper.writeInfo("response status：{} ,spent [" + spent + "]ms ,body: {}", status, res);
+            log.info("response status：{} ,spent [" + spent + "]ms ,body: {}", status, res);
             if (status == HttpStatus.OK) {
                 return res;
             }
         } catch (RestClientException e) {
-            LogHelper.writeError("request RestClientException：" , e);
+            log.error("request RestClientException：" , e);
             throw e;
         }
         return null;

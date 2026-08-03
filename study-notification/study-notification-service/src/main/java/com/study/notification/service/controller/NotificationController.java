@@ -1,6 +1,6 @@
 package com.study.notification.service.controller;
 
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import com.study.notification.api.NotificationApi;
 import com.study.notification.api.dto.ReminderCreateRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ public class NotificationController implements NotificationApi {
     @Override
     @GetMapping("/notifications/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.NOTIFICATION, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.NOTIFICATION, "status", "UP"));
     }
 
     @Override

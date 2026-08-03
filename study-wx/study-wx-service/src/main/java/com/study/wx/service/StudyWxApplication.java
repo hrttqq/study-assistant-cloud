@@ -6,6 +6,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 import com.study.wx.service.config.WxMiniProgramProperties;
 
+/**
+ * 微信模块
+ */
 @EnableConfigurationProperties(WxMiniProgramProperties.class)
 @SpringBootApplication(scanBasePackages = "com.study")
 public class StudyWxApplication {

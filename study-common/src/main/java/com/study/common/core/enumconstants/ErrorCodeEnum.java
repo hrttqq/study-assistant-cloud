@@ -75,9 +75,9 @@ public enum ErrorCodeEnum {
     /**
      * 活动已过期
      */
-    ACTIVITY_EXPIRED("1000012", "活动已过期"),
+    //ACTIVITY_EXPIRED("1000012", "活动已过期"),
 
-    ACTIVITY_ADDRESS_USING("1000014","存在使用该地址的活动"),
+    //ACTIVITY_ADDRESS_USING("1000014","存在使用该地址的活动"),
 
     GET_WX_USER_INFO_NULL("1000015", "获取用户信息不存在"),
 
@@ -127,21 +127,12 @@ public enum ErrorCodeEnum {
     WINDOW_REPEAT("1000019", "弹窗/浮窗重复"),
 
 
-    APP_ADD_LOVE_ORDER_ERROR("1000020", "您已重复预订该爱心服务，如需再次预订，请重新绑定其他船票。"),
-
     /**
      *手机号码不存在
      */
     NOPHONE("1000021", "手机号码为空"),
 
-
-    SEARCH_FACE_NULL("1000022", "未检索到照片"),
-
-    FACE_CUT_ERROR("1000023", "图片裁剪失败"),
-
-    DATA_NO_EAIST("1000024", "数据不存在"),
-
-    OUT_OF_STOCK("1000025", "抱歉，您来晚啦，此航班摄影套餐服务已售罄"),
+    DATA_NO_EAIST("1000024", "数据不存在")
     ;
 
     /**

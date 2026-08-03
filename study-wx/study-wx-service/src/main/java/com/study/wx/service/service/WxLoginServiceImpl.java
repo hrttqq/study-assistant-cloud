@@ -3,29 +3,31 @@ package com.study.wx.service.service;
 import com.alibaba.fastjson.JSONObject;
 import com.study.common.core.model.ResultMode;
 import com.study.common.core.utils.RedisLockUtil;
+import com.study.common.core.utils.RestInterface;
 import com.study.wx.api.dto.WeChatAppLoginUserDTO;
 import com.study.wx.api.dto.WeChatSilenceLoginDTO;
 import com.study.wx.api.service.WxLoginService;
 import com.study.wx.api.vo.WxUserLoginResponseVO;
+import com.study.wx.service.domain.WeChatAccessTokenResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.wx.service.config.WxMiniProgramProperties;
-import com.study.wx.service.domain.LoginSession;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
 public class WxLoginServiceImpl implements WxLoginService {
 
-    private final Map<String, LoginSession> sessions = new ConcurrentHashMap<>();
-
     @Autowired
     private WxMiniProgramProperties wxProperties;
+
+    @Autowired
+    private RestInterface restInterface;
+
+
+    private static final String WECHAT_LOGIN_KEY = "wechat_login_key";
 
 
     /**
@@ -69,6 +71,27 @@ public class WxLoginServiceImpl implements WxLoginService {
         //4、后置处理
         resultMode = loginAfter(accessTokenResponse, mobile);
         return resultMode;
+    }
+
+    /**
+     * 获取授权token
+     *
+     * @return com.mz.hy.ssoams.api.mvcvo.WeChatAccessTokenResponseVO
+     * @throws
+     * @author gq
+     * @date 2022/5/25 11:05
+     * @Param: code
+     */
+    private WeChatAccessTokenResponseVO getTokenResponse(String code) {
+        String url = String.format(wxProperties.getCode2SessionUrl(), wxProperties.getAppId(), wxProperties.getAppSecret(), code);
+        log.info("WeChatLoginBusiness_getTokenResponse_url=" + url + ",code=" + code);
+        String result = restInterface.get(url);
+        log.info("--------------------------" + result);
+        return HttpHelpUtil.jsonToObj(result, WeChatAccessTokenResponseVO.class);
+    }
+
+    private ResultMode<WxUserLoginResponseVO> loginAfter(WeChatAccessTokenResponseVO accessTokenResponse, String mobile) {
+        return null;
     }
 
     @Override

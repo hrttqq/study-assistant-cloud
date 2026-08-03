@@ -4,7 +4,7 @@ import com.study.ai.api.AiApi;
 import com.study.ai.api.dto.ChatRequest;
 import com.study.ai.api.dto.PlanGenerateRequest;
 import com.study.ai.api.dto.SummarizeRequest;
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ public class AiController implements AiApi {
     @Override
     @GetMapping("/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.AI, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.AI, "status", "UP"));
     }
 
     @Override

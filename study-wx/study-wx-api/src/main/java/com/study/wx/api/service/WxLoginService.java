@@ -7,7 +7,19 @@ import com.study.wx.api.vo.WxUserLoginResponseVO;
 
 public interface WxLoginService {
 
+    /**
+     * 一键登录
+     *
+     * @param request
+     * @return
+     */
     ResultMode<WxUserLoginResponseVO> waChatAppleLogin(WeChatAppLoginUserDTO request);
 
-    ResultMode<WxUserLoginResponseVO> silentLogin(WeChatSilenceLoginDTO request)
+    /**
+     * 静默登录
+     *
+     * @param request
+     * @return
+     */
+    ResultMode<WxUserLoginResponseVO> silentLogin(WeChatSilenceLoginDTO request);
 }

@@ -1,6 +1,9 @@
-package com.study.common.core;
+package com.study.common.core.constant;
 
-public final class ServiceNames {
+/**
+ * 服务名常量类
+ */
+public final class ServiceNamesConstant {
 
     public static final String GATEWAY = "study-gateway";
     /**
@@ -36,6 +39,6 @@ public final class ServiceNames {
      */
     public static final String WX = "study-wx";
 
-    private ServiceNames() {
+    private ServiceNamesConstant() {
     }
 }

@@ -1,6 +1,6 @@
 package com.study.wx.service.controller;
 
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import com.study.common.core.enumconstants.ErrorCodeEnum;
 import com.study.common.core.model.ResultMode;
 import com.study.wx.api.dto.WeChatAppLoginUserDTO;
@@ -26,12 +26,17 @@ public class WxLoginController implements WxLoginApi {
     @Autowired
     private WxLoginService wxLoginService;
 
+    /**
+     * 探活接口
+     *
+     * @return
+     */
     @Override
     @GetMapping("/health")
     public ResultMode<Map<String, String>> health() {
         ResultMode<Map<String, String>> resultMode = new ResultMode<>();
         Map<String, String> result = new HashMap<>();
-        result.put("service", ServiceNames.WX);
+        result.put("service", ServiceNamesConstant.WX);
         result.put("status", "UP");
         return resultMode;
         //return ResultMode(Map.of("service", ServiceNames.WX, "status", "UP"));

@@ -1,6 +1,6 @@
 package com.study.member.service.controller;
 
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import com.study.member.api.MemberApi;
 import com.study.member.api.dto.UpgradeRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class MemberController implements MemberApi {
     @Override
     @GetMapping("/memberships/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.MEMBER, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.MEMBER, "status", "UP"));
     }
 
     @Override

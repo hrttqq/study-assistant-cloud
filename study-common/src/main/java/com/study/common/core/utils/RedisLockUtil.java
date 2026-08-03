@@ -4,14 +4,13 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.util.DateUtils;
 import com.mz.hyzs.commons.toolunit.model.UserTokenResponseVO;
+import com.study.common.core.constant.StudyConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.client.RestClientException;
 import redis.clients.jedis.Jedis;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -303,6 +302,11 @@ public class RedisLockUtil {
     }
 
     /**
+     * accessToken缓存TTL（秒），与Redis缓存过期时间保持一致
+     */
+    private static final int ACCESS_TOKEN_CACHE_TTL = 7000;
+
+    /**
      * 获取微信AccessToken
      *
      * @return java.lang.String
@@ -314,7 +318,7 @@ public class RedisLockUtil {
      */
     public static String getAccessToken(String appletAppId, String appletSecret, RestInterface restInterface) {
 
-        String key = SpringContextUtil.getRedisPrefix() + Constant.USER_LOGIN_WE_CHAT + "_token";
+        String key = SpringContextUtil.getRedisPrefix() + StudyConstant.USER_LOGIN_WECHAT + "_token";
         String tokenStr = RedisUtil.get(key);
         JSONObject tokenJson = JSONObject.parseObject(tokenStr);
         if (Objects.nonNull(tokenJson)) {
@@ -332,9 +336,50 @@ public class RedisLockUtil {
     }
 
     private static String getAccessToken(String appletAppId, String appletSecret, RestInterface restInterface, String key) {
-        boolean flag = RedisLockUtil.tryGetDistributedLock(SpringContextUtil.getRedisPrefix() + Constant.ACCESSTOKEN_KEY, "getAccessToken", 3000);
+        String lockKey = SpringContextUtil.getRedisPrefix() + StudyConstant.ACCESS_TOKEN_KEY;
+        boolean flag = RedisLockUtil.tryGetDistributedLock(lockKey, "getAccessToken", 3000);
         log.info("RedisLockUtil_getAccessToken_flag:{}", flag);
-        return flag ? accessToken(key, appletAppId, appletSecret, restInterface) : null;
+        if (flag) {
+            try {
+                return accessToken(key, appletAppId, appletSecret, restInterface);
+            } finally {
+                // 释放分布式锁，避免其他请求被阻塞
+                RedisLockUtil.releaseDistributedLock(lockKey, "getAccessToken");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 强制刷新微信AccessToken
+     * 直接从微信API获取新token并覆盖Redis缓存中的旧值
+     * 适用于当微信接口返回errcode=40001（token失效）时主动刷新
+     *
+     * @return java.lang.String 新的accessToken
+     * @author gq
+     * @Param: appletAppId
+     * @Param: appletSecret
+     * @Param: restInterface
+     */
+    public static String refreshAccessToken(String appletAppId, String appletSecret, RestInterface restInterface) {
+        String key = SpringContextUtil.getRedisPrefix() + StudyConstant.USER_LOGIN_WECHAT + "_token";
+        log.info("RedisLockUtil_refreshAccessToken_开始强制刷新accessToken, key:{}", key);
+        // 获取分布式锁，直接调用微信API获取新token并覆盖旧缓存
+        String lockKey = SpringContextUtil.getRedisPrefix() + StudyConstant.ACCESS_TOKEN_KEY;
+        boolean flag = RedisLockUtil.tryGetDistributedLock(lockKey, "getAccessToken", 3000);
+        log.info("RedisLockUtil_refreshAccessToken_flag:{}", flag);
+        if (flag) {
+            try {
+                String newToken = accessToken(key, appletAppId, appletSecret, restInterface);
+                log.info("RedisLockUtil_refreshAccessToken_刷新accessToken完成, newToken:{}", newToken);
+                return newToken;
+            } finally {
+                // 释放分布式锁，避免其他请求被阻塞
+                RedisLockUtil.releaseDistributedLock(lockKey, "getAccessToken");
+            }
+        }
+        log.info("RedisLockUtil_refreshAccessToken_获取分布式锁失败");
+        return null;
     }
 
     /**
@@ -350,7 +395,7 @@ public class RedisLockUtil {
      */
     private static String accessToken(String key, String appletAppId, String appletSecret, RestInterface restInterface) {
         log.info("RedisLockUtil_accessToken_key:{},appletAppId:{}, appletSecret:{}", key, appletAppId, appletSecret);
-        String url = String.format(Constant.URL_ACCESS_TOKEN_CLIENT_CREDENTIAL, appletAppId, appletSecret);
+        String url = String.format(StudyConstant.URL_ACCESS_TOKEN_CLIENT_CREDENTIAL, appletAppId, appletSecret);
         try {
             Date date = new Date();
             String getTime = DateUtils.format(date);
@@ -361,7 +406,7 @@ public class RedisLockUtil {
                 JSONObject tokenJson = new JSONObject();
                 tokenJson.put("accessToken", accessToken);
                 tokenJson.put("getTime", getTime);
-                RedisUtil.set(key, JSON.toJSONString(tokenJson), 7000);
+                RedisUtil.set(key, JSON.toJSONString(tokenJson), ACCESS_TOKEN_CACHE_TTL);
                 log.info("RedisLockUtil_accessToken_accessToken:{},getTime:{}", accessToken, getTime);
                 return accessToken;
             }
@@ -369,5 +414,63 @@ public class RedisLockUtil {
             log.error("调用微信获取accessToken异常", e);
         }
         return null;
+    }
+
+    /**
+     * 微信API调用函数式接口
+     * 接收accessToken作为参数，返回微信API调用的结果字符串
+     */
+    @FunctionalInterface
+    public interface WechatApiCall {
+        String call(String accessToken) throws Exception;
+    }
+
+    /**
+     * 带自动刷新机制的微信API调用封装
+     * 流程：获取accessToken → 调用微信API → 检测errcode=40001 → 自动刷新token → 重试一次
+     *
+     * @param appletAppId   小程序appId
+     * @param appletSecret  小程序secret
+     * @param restInterface REST接口
+     * @param apiCall       微信API调用函数，接收accessToken，返回响应结果字符串
+     * @return 微信API调用的最终结果字符串，如果获取token失败则返回空字符串
+     */
+    public static String callWechatApiWithAutoRefresh(String appletAppId, String appletSecret, RestInterface restInterface, WechatApiCall apiCall) {
+        try {
+            // 1. 获取accessToken
+            String accessToken = getAccessToken(appletAppId, appletSecret, restInterface);
+            if (StringUtils.isBlank(accessToken)) {
+                log.info("callWechatApiWithAutoRefresh_获取accessToken失败，token为空");
+                return "";
+            }
+
+            // 2. 调用微信API
+            String result = apiCall.call(accessToken);
+
+            // 3. 检测errcode=40001（token失效），自动刷新并重试一次
+            if (StringUtils.isNotBlank(result)) {
+                try {
+                    JSONObject resultJson = JSONObject.parseObject(result);
+                    String errcode = resultJson.getString("errcode");
+                    if ("40001".equals(errcode)) {
+                        log.info("callWechatApiWithAutoRefresh_accessToken失效(errcode=40001)，刷新token并重试");
+                        String newAccessToken = refreshAccessToken(appletAppId, appletSecret, restInterface);
+                        if (StringUtils.isNotBlank(newAccessToken)) {
+                            return apiCall.call(newAccessToken);
+                        } else {
+                            log.info("callWechatApiWithAutoRefresh_刷新token失败，newAccessToken为空");
+                        }
+                    }
+                } catch (Exception parseEx) {
+                    // 结果不是JSON格式，忽略解析异常，直接返回原始结果
+                    log.info("callWechatApiWithAutoRefresh_解析结果非JSON格式，跳过40001检测");
+                }
+            }
+
+            return result;
+        } catch (Exception e) {
+            log.error("callWechatApiWithAutoRefresh_调用微信API异常", e);
+            return "";
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.study.auth.service.controller;
 import com.study.auth.api.AuthApi;
 import com.study.auth.api.dto.LoginRequest;
 import com.study.auth.api.dto.RegisterRequest;
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ public class AuthController implements AuthApi {
     @Override
     @GetMapping("/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.AUTH, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.AUTH, "status", "UP"));
     }
 
     @Override

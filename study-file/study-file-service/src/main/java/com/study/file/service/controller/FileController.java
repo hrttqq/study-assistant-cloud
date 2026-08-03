@@ -1,6 +1,6 @@
 package com.study.file.service.controller;
 
-import com.study.common.core.ServiceNames;
+import com.study.common.core.constant.ServiceNamesConstant;
 import com.study.file.api.FileApi;
 import com.study.file.api.dto.MaterialUploadRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ public class FileController implements FileApi {
     @Override
     @GetMapping("/files/health")
     public ApiResponse<Map<String, String>> health() {
-        return ApiResponse.success(Map.of("service", ServiceNames.FILE, "status", "UP"));
+        return ApiResponse.success(Map.of("service", ServiceNamesConstant.FILE, "status", "UP"));
     }
 
     @Override
