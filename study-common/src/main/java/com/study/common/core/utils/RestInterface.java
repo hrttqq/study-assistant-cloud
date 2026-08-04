@@ -268,10 +268,10 @@ public class RestInterface {
             long start = System.currentTimeMillis();
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, method, httpEntity, String.class);
             long spent = System.currentTimeMillis() - start;
-            HttpStatus status = responseEntity.getStatusCode();
+            HttpStatusCode statusCode = responseEntity.getStatusCode();
             String res = responseEntity.getBody();
-            log.info("response status：{} ,spent [" + spent + "]ms ,body: {}", status, res);
-            if (status == HttpStatus.OK) {
+            log.info("response status：{} ,spent [" + spent + "]ms ,body: {}", statusCode, res);
+            if (statusCode == HttpStatus.OK) {
                 return res;
             }
         } catch (RestClientException e) {

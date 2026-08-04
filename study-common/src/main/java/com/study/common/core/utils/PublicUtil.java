@@ -1,13 +1,15 @@
-﻿package com.study.common.core.utils;
+package com.study.common.core.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.BeansException;
+import org.springframework.core.convert.support.DefaultConversionService;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -133,11 +135,11 @@ public class PublicUtil {
      */
     public static Object copyProperty(Object bean, String name, Object value) {
         try {
-            BeanUtils.copyProperty(bean, name, value);
-        } catch (IllegalAccessException e) {
-            log.error("Bean对象反射时出现异常", e);
-        } catch (InvocationTargetException e) {
-            log.error("Bean对象中没有找到属性名为:" + name, e);
+            BeanWrapper wrapper = new BeanWrapperImpl(bean);
+            wrapper.setConversionService(new DefaultConversionService());
+            wrapper.setPropertyValue(name, value);
+        } catch (Exception e) {
+            log.error("Bean对象设置属性异常，属性名：{}", name, e);
         }
         return bean;
     }
@@ -153,7 +155,7 @@ public class PublicUtil {
             return targetObj;
         }
         try {
-            BeanUtils.copyProperties(targetObj, sourceObj);
+            BeanUtils.copyProperties(sourceObj, targetObj);
         } catch (Exception e) {
             log.error("Bean CopyProperties Exception", e);
         }
@@ -183,12 +185,13 @@ public class PublicUtil {
 
     /**
      * 复制list对象
+     *
+     * @return java.util.List<T>
+     * @throws
      * @author gq
      * @date 2022/5/30 10:45
      * @Param: dl
-    * @Param: supplier
-     * @return java.util.List<T>
-     * @throws
+     * @Param: supplier
      */
     public static <D, T> List<T> convert(List<D> dl, Supplier<T> supplier) {
         if (dl == null) {
@@ -198,7 +201,6 @@ public class PublicUtil {
         dl.forEach(d -> tl.add(convert(d, supplier)));
         return tl;
     }
-
 
 
     /**
@@ -376,10 +378,11 @@ public class PublicUtil {
 
     /**
      * list字符转换
+     *
+     * @return java.util.List<java.lang.String>
      * @author gq
      * @date 2022/8/17 15:37
      * @Param: list
-     * @return java.util.List<java.lang.String>
      */
     public static List<String> checkListSplit(List<String> list) {
         List<String> stringList = new ArrayList<>();
