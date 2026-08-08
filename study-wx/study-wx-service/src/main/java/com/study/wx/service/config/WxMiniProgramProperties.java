@@ -7,10 +7,6 @@ public class WxMiniProgramProperties {
 
     private String appId;
     private String appSecret;
-    private Boolean mockEnabled = true;
-    private String code2SessionUrl;
-    private String userServiceUrl;
-    private Long tokenTtlMinutes = 120L;
 
     public String getAppId() {
         return appId;
@@ -28,35 +24,4 @@ public class WxMiniProgramProperties {
         this.appSecret = appSecret;
     }
 
-    public Boolean getMockEnabled() {
-        return mockEnabled;
-    }
-
-    public void setMockEnabled(Boolean mockEnabled) {
-        this.mockEnabled = mockEnabled;
-    }
-
-    public String getCode2SessionUrl() {
-        return code2SessionUrl;
-    }
-
-    public void setCode2SessionUrl(String code2SessionUrl) {
-        this.code2SessionUrl = code2SessionUrl;
-    }
-
-    public String getUserServiceUrl() {
-        return userServiceUrl;
-    }
-
-    public void setUserServiceUrl(String userServiceUrl) {
-        this.userServiceUrl = userServiceUrl;
-    }
-
-    public Long getTokenTtlMinutes() {
-        return tokenTtlMinutes;
-    }
-
-    public void setTokenTtlMinutes(Long tokenTtlMinutes) {
-        this.tokenTtlMinutes = tokenTtlMinutes;
-    }
 }

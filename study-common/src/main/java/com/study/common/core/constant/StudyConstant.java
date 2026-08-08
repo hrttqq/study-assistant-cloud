@@ -16,4 +16,9 @@ public class StudyConstant {
     public static final String URL_ACCESS_TOKEN_CLIENT_CREDENTIAL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
     public static final String URL_SUBSCRIBE_SEND = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=%s";
+
+    /**
+     * 微信解析手机号
+     */
+    public static final String WECHAT_PHONE_NUMBER ="https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=%s";
 }

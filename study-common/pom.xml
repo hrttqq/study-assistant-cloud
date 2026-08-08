@@ -16,6 +16,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <redis.clients.version>2.9.1</redis.clients.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     </properties>
 
 
@@ -50,6 +51,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
         </dependency>
     </dependencies>
 </project>

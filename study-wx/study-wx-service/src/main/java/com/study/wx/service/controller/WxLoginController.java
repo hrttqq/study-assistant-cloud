@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 微信登录
+ */
 @RestController
 @RequestMapping("/wx")
 public class WxLoginController implements WxLoginApi {
