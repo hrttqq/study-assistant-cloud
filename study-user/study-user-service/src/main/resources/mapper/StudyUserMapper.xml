@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.study.user.service.mapper.UserMapper">
+<mapper namespace="com.study.user.service.mapper.StudyUserMapper">
 
-    <resultMap id="UserResultMap" type="com.study.user.service.entity.UserEntity">
+    <resultMap id="UserResultMap" type="com.study.user.api.entity.StudyUserEntity">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="nickname" column="nickname"/>
@@ -15,15 +15,5 @@
         <result property="avatarUrl" column="avatar_url"/>
     </resultMap>
 
-    <select id="findByUsername" resultMap="UserResultMap">
-        select id, username, nickname, email, member_level, wx_open_id, wx_union_id, avatar_url
-        from study_user
-        where username = #{username}
-    </select>
 
-    <select id="findByWxOpenId" resultMap="UserResultMap">
-        select id, username, nickname, email, member_level, wx_open_id, wx_union_id, avatar_url
-        from study_user
-        where wx_open_id = #{openId}
-    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.study.common.core.enumconstants;
+package com.study.common.core.enumConstants;
 
 
 /**

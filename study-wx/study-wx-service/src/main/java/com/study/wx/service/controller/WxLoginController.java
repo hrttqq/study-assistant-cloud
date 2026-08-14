@@ -1,7 +1,7 @@
 package com.study.wx.service.controller;
 
 import com.study.common.core.constant.ServiceNamesConstant;
-import com.study.common.core.enumconstants.ErrorCodeEnum;
+import com.study.common.core.enumConstants.ErrorCodeEnum;
 import com.study.common.core.model.ResultMode;
 import com.study.wx.api.dto.WeChatAppLoginUserDTO;
 import com.study.wx.api.dto.WeChatSilenceLoginDTO;

@@ -1,12 +1,12 @@
 package com.study.user.api;
 
-import com.study.user.api.dto.WxUserLoginRequest;
+import com.study.common.core.model.ResultMode;
 
 import java.util.Map;
 
 public interface UserApi {
 
-    ApiResponse<Map<String, String>> health();
+    ResultMode<Map<String, String>> health();
 
     ApiResponse<Map<String, Object>> currentUser();
 

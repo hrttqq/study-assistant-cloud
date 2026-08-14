@@ -1,6 +1,6 @@
 package com.study.common.core.model;
 
-import com.study.common.core.enumconstants.ErrorCodeEnum;
+import com.study.common.core.enumConstants.ErrorCodeEnum;
 import io.swagger.annotations.ApiModel;
 
 import java.io.Serializable;

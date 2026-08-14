@@ -1,6 +1,6 @@
 package com.study.common.core.utils;
 
-import com.study.common.core.enumconstants.RedisEnum;
+import com.study.common.core.enumConstants.RedisEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 

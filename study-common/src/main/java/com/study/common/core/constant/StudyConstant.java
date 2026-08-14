@@ -15,6 +15,11 @@ public class StudyConstant {
      */
     public static final String URL_ACCESS_TOKEN_CLIENT_CREDENTIAL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
+    /**
+     * 微信小程序登陆查询SESSION_KEY
+     */
+    public static final String URL_APPLET_SESSION_KEY = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code";
+
     public static final String URL_SUBSCRIBE_SEND = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=%s";
 
     /**

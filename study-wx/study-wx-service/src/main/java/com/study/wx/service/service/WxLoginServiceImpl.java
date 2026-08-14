@@ -3,16 +3,21 @@ package com.study.wx.service.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.study.common.core.constant.StudyConstant;
+import com.study.common.core.enumConstants.DicEnum;
+import com.study.common.core.enumConstants.ErrorCodeEnum;
 import com.study.common.core.model.ResultMode;
-import com.study.common.core.utils.HttpHelpUtil;
-import com.study.common.core.utils.RedisLockUtil;
-import com.study.common.core.utils.RestInterface;
+import com.study.common.core.utils.*;
+import com.study.user.api.dto.StudyWxUserRegisterDTO;
+import com.study.user.api.response.StudyUserResponse;
+import com.study.user.api.response.StudyWxUserResponse;
 import com.study.wx.api.dto.WeChatAppLoginUserDTO;
 import com.study.wx.api.dto.WeChatSilenceLoginDTO;
 import com.study.wx.api.service.WxLoginService;
 import com.study.wx.api.vo.WxUserLoginResponseVO;
 import com.study.wx.service.domain.WeChatUserTokenResponseVO;
 import com.study.wx.service.domain.WeChatAccessTokenResponseVO;
+import com.study.wx.service.feign.StudyAuthApiService;
+import com.study.wx.service.feign.StudyUserApiService;
 import com.study.wx.service.utils.WxInteractionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +39,12 @@ public class WxLoginServiceImpl implements WxLoginService {
 
     @Autowired
     private RestInterface restInterface;
+
+    @Autowired
+    private StudyUserApiService studyUserApiService;
+
+    @Autowired
+    private StudyAuthApiService studyAuthApiService;
 
 
     private static final String WECHAT_LOGIN_KEY = "wechat_login_key";
@@ -96,6 +107,7 @@ public class WxLoginServiceImpl implements WxLoginService {
 
     /**
      * 解析手机号 新增重试机制限制
+     *
      * @param mobileCode
      * @param isRetry
      * @return
@@ -166,15 +178,113 @@ public class WxLoginServiceImpl implements WxLoginService {
      * @Param: code
      */
     private WeChatAccessTokenResponseVO getTokenResponse(String code) {
-        String url = String.format(wxProperties.getCode2SessionUrl(), wxProperties.getAppId(), wxProperties.getAppSecret(), code);
+        String url = String.format(StudyConstant.URL_APPLET_SESSION_KEY, wxProperties.getAppId(), wxProperties.getAppSecret(), code);
         log.info("WeChatLoginBusiness_getTokenResponse_url=" + url + ",code=" + code);
         String result = restInterface.get(url);
         log.info("--------------------------" + result);
         return HttpHelpUtil.jsonToObj(result, WeChatAccessTokenResponseVO.class);
     }
 
-    private ResultMode<WxUserLoginResponseVO> loginAfter(WeChatAccessTokenResponseVO accessTokenResponse, String mobile) {
-        return null;
+    /**
+     * 授权后置处理
+     *
+     * @param tokenResponse
+     * @param mobile
+     * @return
+     */
+    public ResultMode<WxUserLoginResponseVO> loginAfter(WeChatAccessTokenResponseVO tokenResponse, String mobile) {
+        ResultMode<WxUserLoginResponseVO> resultMode = new ResultMode<>();
+        try {
+
+            StudyWxUserResponse wxOpenUser = studyUserApiService.getOpenId(tokenResponse.getOpenid(), null);
+
+            if (null == wxOpenUser) {
+                StudyWxUserRegisterDTO registerDTO = buildWxUserRegisterDTO(tokenResponse, mobile); //保存微信登陆信息
+                wxOpenUser = studyUserApiService.createStudyWxUser(registerDTO);
+            } else {
+                if (wxOpenUser.getWxuserStatus().equals(DicEnum.WxUserStatusEnum.DEFAULT.getCode())) {
+                    if (StringUtils.isBlank(wxOpenUser.getMobile()) && StringUtils.isNotBlank(mobile)) {
+                        studyUserApiService.updateWxInfoAfter(mobile, wxOpenUser.getWxuserId());
+                    }
+                } else {
+                    resultMode.setSucceed(false);
+                    resultMode.setErrCode(ErrorCodeEnum.USER_FROZEN.getCode());
+                    resultMode.setErrMsg(ErrorCodeEnum.USER_FROZEN.getDesc());
+                    return resultMode;
+                }
+            }
+
+            //登录后获取token
+            WxUserLoginResponseVO response = getWeChatToken(wxOpenUser);
+            resultMode.getModel().add(response);
+
+        } catch (Exception e) {
+            log.error("授权处理异常,e:{}", e);
+            resultMode.setErrMsg("授权处理异常");
+            resultMode.setSucceed(false);
+        }
+        return resultMode;
+    }
+
+
+    /**
+     * 登录后获取token
+     *
+     * @return com.mz.hy.ssoams.api.mvcvo.UserLoginResponseVO
+     * @throws
+     * @author gq
+     * @date 2022/5/25 10:48
+     * @Param: oldOpenUser
+     */
+    private WxUserLoginResponseVO getWeChatToken(StudyWxUserResponse oldOpenUser) {
+        StudyUserResponse userInfo = studyUserApiService.getModelByLoginId(oldOpenUser.getStudyUserId());
+        String token = saveToken(userInfo);
+        WxUserLoginResponseVO response = new WxUserLoginResponseVO();
+        response.setToken(token);
+        response.setWxUserId(oldOpenUser.getWxuserId());
+        response.setUserBaseId(oldOpenUser.getStudyUserId());
+        return response;
+    }
+
+
+    /**
+     * 组装数据
+     *
+     * @param tokenResponse
+     * @param mobile
+     * @return
+     */
+    private StudyWxUserRegisterDTO buildWxUserRegisterDTO(WeChatAccessTokenResponseVO tokenResponse, String mobile) {
+        StudyWxUserRegisterDTO registerDTO = new StudyWxUserRegisterDTO();
+        registerDTO.setOpenId(tokenResponse.getOpenid());
+        registerDTO.setAppId(wxProperties.getAppId());
+        registerDTO.setUnionId(tokenResponse.getUnionId());
+        registerDTO.setSessionKey(tokenResponse.getSession_key());
+        registerDTO.setGender("0");
+        registerDTO.setNickName("微信用户");
+        registerDTO.setMobile(mobile);
+        return registerDTO;
+    }
+
+    /**
+     * 保存token
+     *
+     * @param studyUser
+     * @return
+     */
+    private String saveToken(StudyUserResponse studyUser) {
+        String token = null;
+        try {
+            String redisKey = SpringContextUtil.getRedisPrefix() + SsoRedisKeyEnum.SSOAMS_LOGIN_TOKEN_PREFIX.getCode() + studyUser.getUserBaseId();
+            token = RedisUtil.get(redisKey);
+            if (null == token || token.equals("-5")) {
+                token = studyAuthApiService.getJwtToken(studyUser, null);
+                RedisUtil.set(redisKey, token, 3600 * 24);
+            }
+        } catch (Exception e) {
+            log.error("小程序登录生成token异常", e);
+        }
+        return token;
     }
 
     @Override
