@@ -8,9 +8,12 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 用户与角色关联关系entity
+ */
 @Data
 @TableName("study_user_role")
-public class UserRoleEntity {
+public class StudyUserRoleEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
     private Long userId;

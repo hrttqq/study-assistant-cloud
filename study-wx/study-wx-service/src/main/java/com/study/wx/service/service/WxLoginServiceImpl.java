@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.study.common.core.constant.StudyConstant;
 import com.study.common.core.enumConstants.DicEnum;
 import com.study.common.core.enumConstants.ErrorCodeEnum;
+import com.study.common.core.enumConstants.RedisEnum;
 import com.study.common.core.model.ResultMode;
 import com.study.common.core.utils.*;
 import com.study.user.api.dto.StudyWxUserRegisterDTO;
@@ -241,8 +242,8 @@ public class WxLoginServiceImpl implements WxLoginService {
         String token = saveToken(userInfo);
         WxUserLoginResponseVO response = new WxUserLoginResponseVO();
         response.setToken(token);
-        response.setWxUserId(oldOpenUser.getWxuserId());
-        response.setUserBaseId(oldOpenUser.getStudyUserId());
+        response.setStudyWxUserId(oldOpenUser.getWxuserId());
+        response.setStudyUserId(oldOpenUser.getStudyUserId());
         return response;
     }
 
@@ -275,7 +276,7 @@ public class WxLoginServiceImpl implements WxLoginService {
     private String saveToken(StudyUserResponse studyUser) {
         String token = null;
         try {
-            String redisKey = SpringContextUtil.getRedisPrefix() + SsoRedisKeyEnum.SSOAMS_LOGIN_TOKEN_PREFIX.getCode() + studyUser.getUserBaseId();
+            String redisKey = SpringContextUtil.getRedisPrefix() + RedisEnum.RedisKeyEnum.LOGIN_TOKEN_PREFIX.getCode() + studyUser.getStudyUserId();
             token = RedisUtil.get(redisKey);
             if (null == token || token.equals("-5")) {
                 token = studyAuthApiService.getJwtToken(studyUser, null);

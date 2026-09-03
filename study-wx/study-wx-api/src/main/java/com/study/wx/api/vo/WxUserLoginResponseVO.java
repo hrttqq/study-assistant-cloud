@@ -11,8 +11,8 @@ public class WxUserLoginResponseVO {
     private String token;
 
     @ApiModelProperty(value = "微信用户ID")
-    private String wxUserId;
+    private String studyWxUserId;
 
     @ApiModelProperty(value = "内部用户ID")
-    private String userBaseId;
+    private String studyUserId;
 }

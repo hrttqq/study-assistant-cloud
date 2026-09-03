@@ -1,5 +1,7 @@
 package com.study.user.service.service;
 
+import com.study.common.core.enumConstants.DicEnum;
+import com.study.common.core.utils.BeanUtil;
 import com.study.user.api.dto.StudyWxUserRegisterDTO;
 import com.study.user.api.entity.StudyUserEntity;
 import com.study.user.api.entity.StudyWxUserEntity;
@@ -70,6 +72,31 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         return convertToVO(wxUserEntity);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateWxInfoAfter(String mobile, String wxUserId) {
+        if (StringUtils.isBlank(mobile) || StringUtils.isBlank(wxUserId)) {
+            return;
+        }
+
+        StudyWxUserEntity wxUserEntity = studyWxUserMapper.selectById(wxUserId);
+        if (wxUserEntity == null) {
+            return;
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        wxUserEntity.setPhone(mobile);
+        wxUserEntity.setUpdatedAt(now);
+        studyWxUserMapper.updateById(wxUserEntity);
+
+        StudyUserEntity userEntity = userMapper.selectById(wxUserEntity.getUserId());
+        if (userEntity != null && StringUtils.isBlank(userEntity.getMobile())) {
+            userEntity.setMobile(mobile);
+            userEntity.setUpdatedAt(now);
+            userMapper.updateById(userEntity);
+        }
+    }
+
     private StudyWxUserEntity buildStudyWxUserEntity(StudyWxUserRegisterDTO registerDTO, Long userId) {
         LocalDateTime now = LocalDateTime.now();
 
@@ -82,7 +109,7 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         wxUserEntity.setPhone(registerDTO.getMobile());
         wxUserEntity.setNickname(StringUtils.defaultIfBlank(registerDTO.getNickName(), "微信用户"));
         wxUserEntity.setAvatarUrl(registerDTO.getAvatarUrl());
-        wxUserEntity.setStatus(0);
+        wxUserEntity.setStatus(Integer.valueOf(DicEnum.WxUserStatusEnum.DEFAULT.getCode()));
         wxUserEntity.setLastLoginAt(now);
         wxUserEntity.setCreatedAt(now);
         wxUserEntity.setUpdatedAt(now);
@@ -106,7 +133,7 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
 
 
     private StudyWxUserResponse convertToVO(StudyWxUserEntity entity) {
-        StudyWxUserResponse vo = new StudyWxUserResponse();
+        StudyWxUserResponse vo = BeanUtil.shallowCopy(entity, StudyWxUserResponse.class);
         vo.setWxuserId(String.valueOf(entity.getId()));
         vo.setStudyUserId(String.valueOf(entity.getUserId()));
         vo.setOpenid(entity.getOpenId());

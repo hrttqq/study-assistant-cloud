@@ -10,11 +10,7 @@ import com.study.wx.api.service.WxLoginService;
 import com.study.wx.api.vo.WxUserLoginResponseVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +37,7 @@ public class WxLoginController implements WxLoginApi {
         Map<String, String> result = new HashMap<>();
         result.put("service", ServiceNamesConstant.WX);
         result.put("status", "UP");
+        resultMode.setData(result);
         return resultMode;
         //return ResultMode(Map.of("service", ServiceNames.WX, "status", "UP"));
     }

@@ -2,6 +2,7 @@ package com.study.wx.service.feign;
 
 
 import com.study.user.api.dto.StudyWxUserRegisterDTO;
+import com.study.user.api.response.StudyUserResponse;
 import com.study.user.api.response.StudyWxUserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,10 @@ public interface StudyUserApiService {
     @PostMapping("/api/studyUser/wx/createStudyWxUser")
     StudyWxUserResponse createStudyWxUser(@RequestBody StudyWxUserRegisterDTO wxUserRegisterDTO);
 
+    @PostMapping("/api/studyUser/wx/updateWxInfoAfter")
     void updateWxInfoAfter(@RequestParam("mobile") String mobile,
                            @RequestParam("wxUserId") String wxUserId);
+
+    @PostMapping("/api/studyUser/getModelByLoginId")
+    StudyUserResponse getModelByLoginId(@RequestParam("studyUserId") String studyUserId);
 }

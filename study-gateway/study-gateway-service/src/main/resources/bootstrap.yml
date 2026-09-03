@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        enabled: false
+        server-addr: ${nacos-server-addr:127.0.0.1:8848}
+        namespace: ${nacos-server-namespace:public}
+        group: study-pass
+        file-extension: yaml
+      discovery:
+        server-addr: ${nacos-server-addr:127.0.0.1:8848}
+        namespace: ${nacos-server-namespace:public}
+        service: ${spring.application.name:study-gateway}

@@ -27,35 +27,4 @@ public class AuthController implements AuthApi {
     public ResultMode<Map<String, String>> health() {
         return new ResultMode(Map.of("service", ServiceNamesConstant.AUTH, "status", "UP"));
     }
-
-    @Override
-    @PostMapping("/register")
-    public ApiResponse<Map<String, Object>> register(@RequestBody RegisterRequest request) {
-        if (users.containsKey(request.username())) {
-            return ApiResponse.fail(409, "username already exists");
-        }
-        Map<String, Object> user = Map.of(
-                "id", userIdGenerator.getAndIncrement(),
-                "username", request.username(),
-                "email", request.email() == null ? "" : request.email(),
-                "memberLevel", "FREE"
-        );
-        users.put(request.username(), user);
-        return ApiResponse.success(user);
-    }
-
-    @Override
-    @PostMapping("/login")
-    public ApiResponse<Map<String, String>> login(@RequestBody LoginRequest request) {
-        users.computeIfAbsent(request.username(), username -> Map.of(
-                "id", userIdGenerator.getAndIncrement(),
-                "username", username,
-                "email", "",
-                "memberLevel", "FREE"
-        ));
-        return ApiResponse.success(Map.of(
-                "username", request.username(),
-                "token", "mock-token"
-        ));
-    }
 }

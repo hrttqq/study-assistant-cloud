@@ -1,8 +1,15 @@
 package com.study.wx.service.feign;
 
 
+import com.study.user.api.response.StudyUserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "study-auth-service", url = "#{'${studyAuth.host}'}")
 public interface StudyAuthApiService {
+    @PostMapping("/api/auth/token/create")
+    String getJwtToken(@RequestBody StudyUserResponse studyUser,
+                       @RequestParam(value = "clientType", required = false) String clientType);
 }

@@ -7,9 +7,12 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 角色类entity
+ */
 @Data
 @TableName("study_permission")
-public class PermissionEntity {
+public class StudyPermissionEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
     private String code;

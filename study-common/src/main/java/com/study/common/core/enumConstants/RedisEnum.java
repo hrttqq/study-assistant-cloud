@@ -24,6 +24,7 @@ public class RedisEnum {
          * 平台参数设置参数编码的Redis的前缀
          */
         PLATFORM_PARAM_SET_PARAM_CODE("platform_param_set_param_code_", "平台参数设置参数编码的Redis的前缀"),
+        LOGIN_TOKEN_PREFIX("login_token_prefix_", "单点登录Token数据Redis前缀"),
         /**
          * 全局 默认自增KEY
          */

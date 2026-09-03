@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: study-wx
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
 
 study:
   wx:
@@ -15,3 +22,18 @@ management:
     web:
       exposure:
         include: health,info
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password:
+  cluster: false
+  maxTotal: 100
+  maxIdle: 30
+  minIdle: 10
+
+studyWxUser:
+  host: http://127.0.0.1:9092
+
+studyAuth:
+  host: http://127.0.0.1:8081

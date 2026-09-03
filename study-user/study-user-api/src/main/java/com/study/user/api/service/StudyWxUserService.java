@@ -7,4 +7,6 @@ public interface StudyWxUserService {
     StudyWxUserResponse getOpenId(String openId, String wxUserStatus);
 
     StudyWxUserResponse createStudyWxUser(StudyWxUserRegisterDTO wxUserRegisterDTO);
+
+    void updateWxInfoAfter(String mobile, String wxUserId);
 }

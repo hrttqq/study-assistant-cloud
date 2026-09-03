@@ -8,15 +8,15 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 
+/**
+ * 角色关联权限entity
+ */
 @Data
-@TableName("study_role")
-public class RoleEntity {
+@TableName("study_role_permission")
+public class StudyRolePermissionEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
-    private String code;
-    private String name;
-    private String description;
-    private Integer status;
+    private String roleCode;
+    private String permissionCode;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

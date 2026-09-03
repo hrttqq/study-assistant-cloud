@@ -9,8 +9,4 @@ import java.util.Map;
 public interface AuthApi {
 
     ResultMode<Map<String, String>> health();
-
-    ResultMode<Map<String, Object>> register(RegisterRequest request);
-
-    ResultMode<Map<String, String>> login(LoginRequest request);
 }
