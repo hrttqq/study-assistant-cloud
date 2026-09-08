@@ -14,7 +14,7 @@
 
     <properties>
         <commons-lang3.version>3.9</commons-lang3.version>
-        <redis.clients.version>2.9.1</redis.clients.version>
+        <redis.clients.version>5.0.2</redis.clients.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <jjwt.version>0.9.1</jjwt.version>

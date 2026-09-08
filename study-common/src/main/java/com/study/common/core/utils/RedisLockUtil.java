@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.client.RestClientException;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -22,8 +23,6 @@ import java.util.concurrent.TimeUnit;
 public class RedisLockUtil {
 
     private static final String LOCK_SUCCESS = "OK";
-    private static final String SET_IF_NOT_EXIST = "NX";
-    private static final String SET_WITH_EXPIRE_TIME = "PX";
     private static final Long RELEASE_SUCCESS = 1L;
 
     /**
@@ -176,7 +175,8 @@ public class RedisLockUtil {
         }
         String result = null;
         try {
-            result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);
+            SetParams params = SetParams.setParams().nx().px(expireTime);
+            result = jedis.set(lockKey, requestId, params);
         } catch (Exception e) {
             log.error("鑾峰彇Redis澶辫触", e);
             RedisUtil.returnBrokenResource(jedis);
@@ -189,20 +189,6 @@ public class RedisLockUtil {
         return false;
 
     }
-   /* public static boolean tryGetDistributedLock(String lockKey, String requestId, int expireTime) {
-
-        Jedis jedis = RedisUtil.getJedis();
-        boolean flag =  null == jedis ? false : true;
-        log.info("--------------------------------"+flag);
-        String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);
-
-        if (LOCK_SUCCESS.equals(result)) {
-            return true;
-        }
-        return false;
-
-    }*/
-
     /**
      * 鑾峰彇鍒嗗竷寮忛攣骞剁瓑寰?
      *

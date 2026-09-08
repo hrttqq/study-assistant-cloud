@@ -15,12 +15,12 @@ CREATE TABLE IF NOT EXISTS `study_user` (
 
 CREATE TABLE IF NOT EXISTS `study_wx_user` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'wx user id',
-    `user_id` bigint NOT NULL COMMENT 'study user id',
+    `study_user_id` bigint NOT NULL COMMENT 'study user id',
     `app_id` varchar(64) NOT NULL COMMENT 'wechat app id',
     `open_id` varchar(128) DEFAULT NULL COMMENT 'wechat open id',
     `union_id` varchar(128) DEFAULT NULL COMMENT 'wechat union id',
     `session_key` varchar(256) DEFAULT NULL COMMENT 'wechat session key',
-    `phone` varchar(11) DEFAULT NULL COMMENT 'mobile phone',
+    `mobile` varchar(11) DEFAULT NULL COMMENT 'mobile',
     `nickname` varchar(64) DEFAULT NULL COMMENT 'wechat nickname',
     `avatar_url` varchar(512) DEFAULT NULL COMMENT 'avatar url',
     `status` tinyint NOT NULL DEFAULT 1 COMMENT 'wx user status',

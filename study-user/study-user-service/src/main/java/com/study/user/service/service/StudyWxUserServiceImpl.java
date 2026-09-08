@@ -85,11 +85,11 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        wxUserEntity.setPhone(mobile);
+        wxUserEntity.setMobile(mobile);
         wxUserEntity.setUpdatedAt(now);
         studyWxUserMapper.updateById(wxUserEntity);
 
-        StudyUserEntity userEntity = userMapper.selectById(wxUserEntity.getUserId());
+        StudyUserEntity userEntity = userMapper.selectById(wxUserEntity.getStudyUserId());
         if (userEntity != null && StringUtils.isBlank(userEntity.getMobile())) {
             userEntity.setMobile(mobile);
             userEntity.setUpdatedAt(now);
@@ -101,12 +101,12 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         LocalDateTime now = LocalDateTime.now();
 
         StudyWxUserEntity wxUserEntity = new StudyWxUserEntity();
-        wxUserEntity.setUserId(userId);
+        wxUserEntity.setStudyUserId(userId);
         wxUserEntity.setAppId(registerDTO.getAppId());
         wxUserEntity.setOpenId(registerDTO.getOpenId());
         wxUserEntity.setUnionId(registerDTO.getUnionId());
         wxUserEntity.setSessionKey(registerDTO.getSessionKey());
-        wxUserEntity.setPhone(registerDTO.getMobile());
+        wxUserEntity.setMobile(registerDTO.getMobile());
         wxUserEntity.setNickname(StringUtils.defaultIfBlank(registerDTO.getNickName(), "微信用户"));
         wxUserEntity.setAvatarUrl(registerDTO.getAvatarUrl());
         wxUserEntity.setStatus(Integer.valueOf(DicEnum.WxUserStatusEnum.DEFAULT.getCode()));
@@ -135,10 +135,10 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
     private StudyWxUserResponse convertToVO(StudyWxUserEntity entity) {
         StudyWxUserResponse vo = BeanUtil.shallowCopy(entity, StudyWxUserResponse.class);
         vo.setWxuserId(String.valueOf(entity.getId()));
-        vo.setStudyUserId(String.valueOf(entity.getUserId()));
+        vo.setStudyUserId(String.valueOf(entity.getStudyUserId()));
         vo.setOpenid(entity.getOpenId());
         vo.setUnionid(entity.getUnionId());
-        vo.setMobile(entity.getPhone());
+        vo.setMobile(entity.getMobile());
         vo.setNickName(entity.getNickname());
         vo.setPhoto(entity.getAvatarUrl());
         vo.setWxuserStatus(String.valueOf(entity.getStatus()));

@@ -6,12 +6,12 @@
     <select id="selectByOpenId" resultType="com.study.user.api.entity.StudyWxUserEntity">
         select
         id,
-        user_id,
+        study_user_id,
         app_id,
         open_id,
         union_id,
         session_key,
-        phone,
+        mobile,
         nickname,
         avatar_url,
         status,

@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 public class StudyWxUserEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Long userId;
+    private Long studyUserId;
     private String appId;
     private String openId;
     private String unionId;
     private String sessionKey;
-    private String phone;
+    private String mobile;
     private String nickname;
     private String avatarUrl;
     private Integer status;

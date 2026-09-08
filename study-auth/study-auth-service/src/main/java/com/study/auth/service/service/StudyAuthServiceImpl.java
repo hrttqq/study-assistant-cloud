@@ -34,21 +34,18 @@ public class StudyAuthServiceImpl implements StudyAuthService {
 
 
     @Override
-    public String getJwtToken(StudyUserResponse studyUser, String clientType) {
+    public String getJwtToken(StudyUserResponse studyUser, String token) {
         TokenInfo tokenInfo = new TokenInfo();
         // 根据用户id获取角色组集合
-        List<String> permissionIdList = StudyUserRoleMapper.getPermissionIdListByAccountId(userInfo.getUserBaseId());
-        tokenInfo.setUserBaseId(studyUser.getStudyUserId());
-        tokenInfo.setCompanyId(userInfo.getOrganizationId());
-        tokenInfo.setLoginId(userInfo.getLoginId());
-        tokenInfo.setLoginName(userInfo.getLoginName());
+        //List<String> permissionIdList = StudyUserRoleMapper.getPermissionIdListByAccountId(userInfo.getUserBaseId());
+        tokenInfo.setUserId(studyUser.getStudyUserId());
         tokenInfo.setUsername(studyUser.getUsername());
-        tokenInfo.setLoginVersionCode(userInfo.getExLoginVersionCode());
-        tokenInfo.setPermissionIdList(permissionIdList);
+        tokenInfo.setNickname(studyUser.getNickname());
+        tokenInfo.setMobile(studyUser.getMobile());
         if (StringUtils.isNotBlank(token)) {
-            tokenInfo.setUuid(token);
+            tokenInfo.setTokenId(token);
         } else {
-            tokenInfo.setUuid(UtilityClass.uuid());
+            tokenInfo.setTokenId(UtilityClass.uuid());
         }
 
         String tokenInfoString = JSON.toJSONString(tokenInfo);

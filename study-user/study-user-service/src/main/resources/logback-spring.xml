@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- 属性定义 -->
+    <!--日志保存路径-->
+    <property name="LOG_HOME" value="./logfile"/>
+    <property name="appName" value="study-wx"/>
+    <!--日志文件最大的大小-->
+    <property name="maxFileSize" value="100MB"/>
+    <!--日志文件保留天数-->
+    <property name="maxHistory" value="30"/>
+
+    <!-- 文件格式 -->
+    <property name="LOG_FILE_NAME" value="${LOG_HOME}/${appName}.log" />
+
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <!-- 日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <!--%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_FILE_NAME}</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 滚动策略: 时间 和 大小 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>${maxHistory}</MaxHistory>
+            <!--日志文件最大的大小-->
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出级别  ERROR DEBUG-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+    <!-- 本地 -->
+    <springProfile name="local">
+        <logger name="Server" level="DEBUG" additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </logger>
+
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="org.springframework" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="com.alibaba.nacos" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="org.apache.kafka" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="redis.clients.jedis" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+
+    </springProfile>
+
+    <!-- 测试环境、开发环境多个使用逗号隔开 -->
+    <springProfile name="test,dev">
+        <logger name="Server" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </logger>
+
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="org.springframework" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="com.alibaba.nacos" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="org.apache.kafka" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+
+        <!--需要将日志单独输出的包路径 如果放在外面即为所有的的配置起作用-->
+        <logger name="redis.clients.jedis" level="ERROR"  additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE"/>
+        </logger>
+    </springProfile>
+        <!-- 生产环境 -->
+    <springProfile name="prod">
+        <logger name="Server" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </logger>
+    </springProfile>
+
+
+
+</configuration>

@@ -9,9 +9,6 @@
         <result property="username" column="username"/>
         <result property="nickname" column="nickname"/>
         <result property="email" column="email"/>
-        <result property="memberLevel" column="member_level"/>
-        <result property="wxOpenId" column="wx_open_id"/>
-        <result property="wxUnionId" column="wx_union_id"/>
         <result property="avatarUrl" column="avatar_url"/>
     </resultMap>
 

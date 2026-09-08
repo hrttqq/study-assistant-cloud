@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 调用权限服务模块feign
+ */
 @FeignClient(name = "study-auth-service", url = "#{'${studyAuth.host}'}")
 public interface StudyAuthApiService {
     @PostMapping("/api/auth/token/create")
     String getJwtToken(@RequestBody StudyUserResponse studyUser,
-                       @RequestParam(value = "clientType", required = false) String clientType);
+                       @RequestParam(value = "token", required = false) String token);
 }

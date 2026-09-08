@@ -17,7 +17,7 @@ public class StudyAuthApiController {
 
     @PostMapping("/token/create")
     String getJwtToken(@RequestBody StudyUserResponse studyUser,
-                       @RequestParam(value = "clientType", required = false) String clientType){
-        return studyAuthService.getJwtToken(studyUser,clientType);
+                       @RequestParam(value = "token", required = false) String token){
+        return studyAuthService.getJwtToken(studyUser,token);
     }
 }

@@ -14,8 +14,8 @@ spring:
 
 study:
   wx:
-    app-id: wx-demo-app-id
-    app-secret: fake-wx-app-secret
+    app-id: wx51ca95028e68df4a
+    app-secret: 0ac22924843652e12927b7ff6392e275
 
 management:
   endpoints:

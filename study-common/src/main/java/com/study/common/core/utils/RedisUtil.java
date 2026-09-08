@@ -3,10 +3,11 @@ package com.study.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.core.env.Environment;
 import redis.clients.jedis.*;
 
-import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -251,14 +252,14 @@ public class RedisUtil {
             /** 采用默认的
             //表示一个对象至少停留在idle状态的最短时间，然后才能被idle object evitor扫描并驱逐；
             //这一项只有在timeBetweenEvictionRunsMillis大于0时才有意义
-           // config.setMinEvictableIdleTimeMillis(30000);
+           // config.setMinEvictableIdleDuration(Duration.ofMillis(30000));
             //表示idle object evitor两次扫描之间要sleep的毫秒数
-           // config.setTimeBetweenEvictionRunsMillis(60000);
+           // config.setTimeBetweenEvictionRuns(Duration.ofMillis(60000));
             //表示idle object evitor每次扫描的最多的对象数
            // config.setNumTestsPerEvictionRun(1000);
              **/
             //等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；
-            config.setMaxWaitMillis(MAX_WAIT);
+            config.setMaxWait(Duration.ofMillis(MAX_WAIT));
 
             if (StringUtils.isNotBlank(auth)) {
                 jedisPool = new JedisPool(config, host, port, TIMEOUT, auth);
@@ -289,7 +290,7 @@ public class RedisUtil {
                 int maxAttemts = 10;
 
 
-                JedisPoolConfig poolConfig = new JedisPoolConfig();
+                GenericObjectPoolConfig<Connection> poolConfig = new GenericObjectPoolConfig<>();
                 //访问密码
                 String auth = props.getProperty(REDIS_PASS);
                 //连接池最大连接数
@@ -377,19 +378,19 @@ public class RedisUtil {
         }
     }
 
-    private static void setBlockWhenExhausted(JedisPoolConfig poolConfig) {
+    private static void setBlockWhenExhausted(GenericObjectPoolConfig<?> poolConfig) {
         poolConfig.setBlockWhenExhausted(true);
         poolConfig.setEvictionPolicyClassName("org.apache.commons.pool2.impl.DefaultEvictionPolicy");
         poolConfig.setJmxEnabled(true);
         poolConfig.setJmxNamePrefix("pool");
         poolConfig.setLifo(true);
-        poolConfig.setMaxWaitMillis(-1);
-        poolConfig.setMinEvictableIdleTimeMillis(1800000);
+        poolConfig.setMaxWait(Duration.ofMillis(-1));
+        poolConfig.setMinEvictableIdleDuration(Duration.ofMillis(1800000));
         poolConfig.setMinIdle(10);
         poolConfig.setNumTestsPerEvictionRun(3);
-        poolConfig.setSoftMinEvictableIdleTimeMillis(1800000);
+        poolConfig.setSoftMinEvictableIdleDuration(Duration.ofMillis(1800000));
         poolConfig.setTestWhileIdle(false);
-        poolConfig.setTimeBetweenEvictionRunsMillis(-1);
+        poolConfig.setTimeBetweenEvictionRuns(Duration.ofMillis(-1));
     }
 
 
@@ -425,11 +426,8 @@ public class RedisUtil {
                     if (jedisCluster == null) {
                         initialPool();
                     } else {
-                        int nodes = jedisCluster.getClusterNodes().size();
-                        SecureRandom rand = new SecureRandom();
-                        int key = rand.nextInt(nodes);
                         //随机
-                        jedis = jedisCluster.getClusterNodes().get(key).getResource();
+                        log.warn("Cluster mode does not support getting a raw Jedis resource. Use getJedisCluster() instead.");
                     }
                     break;
                 default:

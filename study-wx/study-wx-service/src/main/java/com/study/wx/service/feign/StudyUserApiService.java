@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 调用用户服务模块feign
+ */
 @FeignClient(name = "study-user-service", url = "#{'${studyWxUser.host}'}")
 public interface StudyUserApiService {
 
