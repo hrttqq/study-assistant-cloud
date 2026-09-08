@@ -15,4 +15,7 @@ public class WxUserLoginResponseVO {
 
     @ApiModelProperty(value = "内部用户ID")
     private String studyUserId;
+
+    @ApiModelProperty(value = "是否完成初始化数据")
+    private Boolean initialized;
 }

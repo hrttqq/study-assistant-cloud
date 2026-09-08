@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `study_user` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'user id',
+    `user_id` varchar(16) NOT NULL COMMENT '用户id',
     `username` varchar(64) NOT NULL COMMENT 'login username',
     `password` varchar(128) NOT NULL DEFAULT '' COMMENT 'login password',
     `mobile` varchar(11) DEFAULT NULL COMMENT 'mobile phone',
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `study_user` (
 
 CREATE TABLE IF NOT EXISTS `study_wx_user` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'wx user id',
-    `study_user_id` bigint NOT NULL COMMENT 'study user id',
+    `study_user_id` varchar(16) NOT NULL COMMENT 'study user id',
     `app_id` varchar(64) NOT NULL COMMENT 'wechat app id',
     `open_id` varchar(128) DEFAULT NULL COMMENT 'wechat open id',
     `union_id` varchar(128) DEFAULT NULL COMMENT 'wechat union id',

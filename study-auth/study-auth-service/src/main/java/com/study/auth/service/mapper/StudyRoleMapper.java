@@ -1,4 +1,9 @@
 package com.study.auth.service.mapper;
 
-public interface StudyRoleMapper {
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.study.auth.api.entity.StudyRoleEntity;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface StudyRoleMapper extends BaseMapper<StudyRoleEntity> {
 }

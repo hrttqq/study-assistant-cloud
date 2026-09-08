@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Data
 @TableName("study_wx_user")
 public class StudyWxUserEntity {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
-    private Long studyUserId;
+    private String studyUserId;
     private String appId;
     private String openId;
     private String unionId;

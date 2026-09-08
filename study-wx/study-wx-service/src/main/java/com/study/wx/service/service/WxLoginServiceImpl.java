@@ -217,7 +217,7 @@ public class WxLoginServiceImpl implements WxLoginService {
 
             //登录后获取token
             WxUserLoginResponseVO response = getWeChatToken(wxOpenUser);
-            resultMode.getModel().add(response);
+            resultMode.setData(response);
 
         } catch (Exception e) {
             log.error("授权处理异常,e:{}", e);
@@ -244,6 +244,7 @@ public class WxLoginServiceImpl implements WxLoginService {
         response.setToken(token);
         response.setStudyWxUserId(oldOpenUser.getWxuserId());
         response.setStudyUserId(oldOpenUser.getStudyUserId());
+        response.setInitialized(false);
         return response;
     }
 

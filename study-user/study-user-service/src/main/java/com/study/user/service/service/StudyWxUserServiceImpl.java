@@ -7,6 +7,7 @@ import com.study.user.api.entity.StudyUserEntity;
 import com.study.user.api.entity.StudyWxUserEntity;
 import com.study.user.api.service.StudyWxUserService;
 import com.study.user.api.response.StudyWxUserResponse;
+import com.study.user.api.utils.UserIdGenerator;
 import com.study.user.service.mapper.StudyUserMapper;
 import com.study.user.service.mapper.StudyWxUserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,7 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         StudyUserEntity userEntity = buildStudyUserEntity(wxUserRegisterDTO);
         userMapper.insert(userEntity);
 
-        StudyWxUserEntity wxUserEntity = buildStudyWxUserEntity(wxUserRegisterDTO, userEntity.getId());
+        StudyWxUserEntity wxUserEntity = buildStudyWxUserEntity(wxUserRegisterDTO, userEntity.getUserId());
         studyWxUserMapper.insert(wxUserEntity);
 
         return convertToVO(wxUserEntity);
@@ -97,7 +98,7 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         }
     }
 
-    private StudyWxUserEntity buildStudyWxUserEntity(StudyWxUserRegisterDTO registerDTO, Long userId) {
+    private StudyWxUserEntity buildStudyWxUserEntity(StudyWxUserRegisterDTO registerDTO, String userId) {
         LocalDateTime now = LocalDateTime.now();
 
         StudyWxUserEntity wxUserEntity = new StudyWxUserEntity();
@@ -120,6 +121,7 @@ public class StudyWxUserServiceImpl implements StudyWxUserService {
         LocalDateTime now = LocalDateTime.now();
 
         StudyUserEntity userEntity = new StudyUserEntity();
+        userEntity.setUserId(UserIdGenerator.generate());
         userEntity.setUsername("wx_" + registerDTO.getOpenId());
         userEntity.setPassword("");
         userEntity.setMobile(registerDTO.getMobile());

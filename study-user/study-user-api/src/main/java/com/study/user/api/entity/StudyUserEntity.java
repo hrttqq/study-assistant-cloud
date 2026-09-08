@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @Data
 @TableName("study_user")
 public class StudyUserEntity {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
+    private String userId;
     private String username;
     private String password;
     private String mobile;

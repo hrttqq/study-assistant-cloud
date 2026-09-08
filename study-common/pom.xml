@@ -17,7 +17,7 @@
         <redis.clients.version>5.0.2</redis.clients.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <jjwt.version>0.9.1</jjwt.version>
+        <jjwt.version>0.11.5</jjwt.version>
         <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
     </properties>
 
@@ -76,8 +76,20 @@
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
+            <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,6 @@
 package com.study.user.service.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.common.core.utils.BeanUtil;
 import com.study.common.core.utils.PublicUtil;
 import com.study.user.api.entity.StudyUserEntity;
@@ -24,8 +25,10 @@ public class StudyUserServiceImpl implements StudyUserService {
         if (StringUtils.isBlank(studyUserId)) {
             return null;
         }
+        QueryWrapper<StudyUserEntity> queryWrapper =
+                new QueryWrapper<StudyUserEntity>().eq("user_id", studyUserId);
 
-        StudyUserEntity studyUserEntity = studyUserMapper.selectById(studyUserId);
+        StudyUserEntity studyUserEntity = studyUserMapper.selectOne(queryWrapper);
         if (PublicUtil.isEmpty(studyUserEntity)) {
             return null;
         }

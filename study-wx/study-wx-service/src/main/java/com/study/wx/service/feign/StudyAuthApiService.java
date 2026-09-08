@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(name = "study-auth-service", url = "#{'${studyAuth.host}'}")
 public interface StudyAuthApiService {
-    @PostMapping("/api/auth/token/create")
+    @PostMapping("/api/studyAuth/token/create")
     String getJwtToken(@RequestBody StudyUserResponse studyUser,
                        @RequestParam(value = "token", required = false) String token);
 }
