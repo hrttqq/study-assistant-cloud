@@ -32,6 +32,7 @@
         <module>study-notification</module>
         <module>study-member</module>
         <module>study-wx</module>
+        <module>study-exam</module>
 
     </modules>
 
