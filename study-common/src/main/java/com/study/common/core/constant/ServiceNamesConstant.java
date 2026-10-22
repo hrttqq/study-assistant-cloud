@@ -22,6 +22,11 @@ public final class ServiceNamesConstant {
      * 计划模块
      */
     public static final String PLAN = "study-plan";
+
+    /**
+     * 考试项目模块
+     */
+    public static final String EXAM = "study-exam";
     /**
      * 文件服务模块
      */
