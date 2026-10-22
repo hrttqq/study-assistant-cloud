@@ -6,7 +6,7 @@ import com.study.common.core.model.ResultMode;
 import com.study.exam.api.response.ExamAttributeResponse;
 import com.study.exam.api.response.ExamCategoryResponse;
 import com.study.exam.api.response.ExamResponse;
-import com.study.exam.service.service.ExamCatalogService;
+import com.study.exam.api.service.ExamCatalogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

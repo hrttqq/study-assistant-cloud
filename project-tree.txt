@@ -1,172 +1,842 @@
-./.gitignore
-./PROJECT_INTRO.md
-./logfile/study-gateway.log
-./logfile/study-gateway.log.2026-09-04.0.log
-./logfile/study-gateway.log.2026-09-07.0.log
-./logfile/study-gateway.log.2026-09-08.0.log
-./logfile/study-gateway.log.2026-09-09.0.log
-./logfile/study-gateway.log.2026-09-10.0.log
-./logfile/study-wx.log
-./logfile/study-wx.log.2026-09-04.0.log
-./logfile/study-wx.log.2026-09-07.0.log
-./logfile/study-wx.log.2026-09-10.0.log
-./pom.xml
-./project-tree.txt
-./study-ai/pom.xml
-./study-ai/study-ai-api/pom.xml
-./study-ai/study-ai-api/src/main/java/com/study/ai/api/AiApi.java
-./study-ai/study-ai-api/src/main/java/com/study/ai/api/dto/ChatRequest.java
-./study-ai/study-ai-api/src/main/java/com/study/ai/api/dto/PlanGenerateRequest.java
-./study-ai/study-ai-api/src/main/java/com/study/ai/api/dto/SummarizeRequest.java
-./study-ai/study-ai-service/pom.xml
-./study-ai/study-ai-service/src/main/java/com/study/ai/service/StudyAiApplication.java
-./study-ai/study-ai-service/src/main/java/com/study/ai/service/controller/AiController.java
-./study-ai/study-ai-service/src/main/resources/application.yml
-./study-ai/study-ai.iml
-./study-auth/pom.xml
-./study-auth/study-auth-api/pom.xml
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/AuthApi.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/dto/LoginRequest.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/dto/RegisterRequest.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/entity/StudyPermissionEntity.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/entity/StudyRoleEntity.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/entity/StudyRolePermissionEntity.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/entity/StudyUserRoleEntity.java
-./study-auth/study-auth-api/src/main/java/com/study/auth/api/service/StudyAuthService.java
-./study-auth/study-auth-service/pom.xml
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/StudyAuthApplication.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/controller/AuthController.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/controller/api/StudyAuthApiController.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/mapper/StudyPermissionMapper.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/mapper/StudyRoleMapper.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/mapper/StudyRolePermissionMapper.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/mapper/StudyUserRoleMapper.java
-./study-auth/study-auth-service/src/main/java/com/study/auth/service/service/StudyAuthServiceImpl.java
-./study-auth/study-auth-service/src/main/resources/application-local.yml
-./study-auth/study-auth-service/src/main/resources/application.yml
-./study-auth/study-auth-service/src/main/resources/db/data.sql
-./study-auth/study-auth-service/src/main/resources/db/schema.sql
-./study-auth/study-auth-service/src/main/resources/mapper/StudyPermissionMapper.xml
-./study-auth/study-auth-service/src/main/resources/mapper/StudyRoleMapper.xml
-./study-auth/study-auth-service/src/main/resources/mapper/StudyRolePermissionMapper.xml
-./study-auth/study-auth-service/src/main/resources/mapper/StudyUserRoleMapper.xml
-./study-common/pom.xml
-./study-common/src/main/java/com/study/common/core/config/CommonBeanConfig.java
-./study-common/src/main/java/com/study/common/core/constant/ServiceNamesConstant.java
-./study-common/src/main/java/com/study/common/core/constant/StudyConstant.java
-./study-common/src/main/java/com/study/common/core/enumConstants/DicEnum.java
-./study-common/src/main/java/com/study/common/core/enumConstants/ErrorCodeEnum.java
-./study-common/src/main/java/com/study/common/core/enumConstants/RedisEnum.java
-./study-common/src/main/java/com/study/common/core/model/ResultMode.java
-./study-common/src/main/java/com/study/common/core/model/TokenInfo.java
-./study-common/src/main/java/com/study/common/core/utils/Base64Util.java
-./study-common/src/main/java/com/study/common/core/utils/BeanUtil.java
-./study-common/src/main/java/com/study/common/core/utils/HttpHelpUtil.java
-./study-common/src/main/java/com/study/common/core/utils/JwtUtil.java
-./study-common/src/main/java/com/study/common/core/utils/MapUtils.java
-./study-common/src/main/java/com/study/common/core/utils/PublicUtil.java
-./study-common/src/main/java/com/study/common/core/utils/RedisLockUtil.java
-./study-common/src/main/java/com/study/common/core/utils/RedisUtil.java
-./study-common/src/main/java/com/study/common/core/utils/RestInterface.java
-./study-common/src/main/java/com/study/common/core/utils/SnowFlake.java
-./study-common/src/main/java/com/study/common/core/utils/SpringContextUtil.java
-./study-common/src/main/java/com/study/common/core/utils/UtilityClass.java
-./study-common/study-common.iml
-./study-exam-service.iml
-./study-exam/pom.xml
-./study-exam/study-exam-api/pom.xml
-./study-exam/study-exam-service/pom.xml
-./study-exam/study-exam-service/src/main/java/com/study/exam/service/StudyExamApplication.java
-./study-exam/study-exam-service/src/main/resources/ddl/ddl.sql
-./study-file/pom.xml
-./study-file/study-file-api/pom.xml
-./study-file/study-file-api/src/main/java/com/study/file/api/FileApi.java
-./study-file/study-file-api/src/main/java/com/study/file/api/dto/MaterialUploadRequest.java
-./study-file/study-file-service/pom.xml
-./study-file/study-file-service/src/main/java/com/study/file/service/StudyFileApplication.java
-./study-file/study-file-service/src/main/java/com/study/file/service/controller/FileController.java
-./study-file/study-file-service/src/main/resources/application.yml
-./study-gateway/pom.xml
-./study-gateway/study-gateway-api/pom.xml
-./study-gateway/study-gateway-api/src/main/java/com/study/gateway/api/package-info.java
-./study-gateway/study-gateway-service/pom.xml
-./study-gateway/study-gateway-service/src/main/java/com/study/gateway/service/StudyGatewayApplication.java
-./study-gateway/study-gateway-service/src/main/resources/application.yml
-./study-gateway/study-gateway-service/src/main/resources/bootstrap-local.properties
-./study-gateway/study-gateway-service/src/main/resources/bootstrap.yml
-./study-gateway/study-gateway-service/src/main/resources/logback-spring.xml
-./study-member/pom.xml
-./study-member/study-member-api/pom.xml
-./study-member/study-member-api/src/main/java/com/study/member/api/MemberApi.java
-./study-member/study-member-api/src/main/java/com/study/member/api/dto/UpgradeRequest.java
-./study-member/study-member-api/src/main/java/com/study/member/api/entity/MemberPlanEntity.java
-./study-member/study-member-api/src/main/java/com/study/member/api/entity/UserMemberEntity.java
-./study-member/study-member-service/pom.xml
-./study-member/study-member-service/src/main/java/com/study/member/service/StudyMemberApplication.java
-./study-member/study-member-service/src/main/java/com/study/member/service/controller/MemberController.java
-./study-member/study-member-service/src/main/resources/application.yml
-./study-notification/pom.xml
-./study-notification/study-notification-api/pom.xml
-./study-notification/study-notification-api/src/main/java/com/study/notification/api/NotificationApi.java
-./study-notification/study-notification-api/src/main/java/com/study/notification/api/dto/ReminderCreateRequest.java
-./study-notification/study-notification-service/pom.xml
-./study-notification/study-notification-service/src/main/java/com/study/notification/service/StudyNotificationApplication.java
-./study-notification/study-notification-service/src/main/java/com/study/notification/service/controller/NotificationController.java
-./study-notification/study-notification-service/src/main/resources/application.yml
-./study-plan/pom.xml
-./study-plan/study-plan-api/pom.xml
-./study-plan/study-plan-api/src/main/java/com/study/plan/api/PlanApi.java
-./study-plan/study-plan-api/src/main/java/com/study/plan/api/dto/CheckInRequest.java
-./study-plan/study-plan-api/src/main/java/com/study/plan/api/dto/ExamPlanCreateRequest.java
-./study-plan/study-plan-service/pom.xml
-./study-plan/study-plan-service/src/main/java/com/study/plan/service/StudyPlanApplication.java
-./study-plan/study-plan-service/src/main/java/com/study/plan/service/controller/PlanController.java
-./study-plan/study-plan-service/src/main/resources/application.yml
-./study-user/pom.xml
-./study-user/study-user-api/pom.xml
-./study-user/study-user-api/src/main/java/com/study/user/api/UserNoExhaustedException.java
-./study-user/study-user-api/src/main/java/com/study/user/api/dto/StudyWxUserRegisterDTO.java
-./study-user/study-user-api/src/main/java/com/study/user/api/entity/StudyUserEntity.java
-./study-user/study-user-api/src/main/java/com/study/user/api/entity/StudyWxUserEntity.java
-./study-user/study-user-api/src/main/java/com/study/user/api/response/StudyUserResponse.java
-./study-user/study-user-api/src/main/java/com/study/user/api/response/StudyWxUserResponse.java
-./study-user/study-user-api/src/main/java/com/study/user/api/service/StudyUserService.java
-./study-user/study-user-api/src/main/java/com/study/user/api/service/StudyWxUserService.java
-./study-user/study-user-api/src/main/java/com/study/user/api/utils/UserIdGenerator.java
-./study-user/study-user-service/pom.xml
-./study-user/study-user-service/src/main/java/com/study/user/service/StudyUserApplication.java
-./study-user/study-user-service/src/main/java/com/study/user/service/controller/UserController.java
-./study-user/study-user-service/src/main/java/com/study/user/service/controller/api/StudyUserApiController.java
-./study-user/study-user-service/src/main/java/com/study/user/service/mapper/StudyUserMapper.java
-./study-user/study-user-service/src/main/java/com/study/user/service/mapper/StudyWxUserMapper.java
-./study-user/study-user-service/src/main/java/com/study/user/service/service/StudyUserServiceImpl.java
-./study-user/study-user-service/src/main/java/com/study/user/service/service/StudyWxUserServiceImpl.java
-./study-user/study-user-service/src/main/resources/application-local.yml
-./study-user/study-user-service/src/main/resources/application.yml
-./study-user/study-user-service/src/main/resources/db/data.sql
-./study-user/study-user-service/src/main/resources/db/schema.sql
-./study-user/study-user-service/src/main/resources/logback-spring.xml
-./study-user/study-user-service/src/main/resources/mapper/StudyUserMapper.xml
-./study-user/study-user-service/src/main/resources/mapper/StudyWxUserMapper.xml
-./study-wx/pom.xml
-./study-wx/study-wx-api/pom.xml
-./study-wx/study-wx-api/src/main/java/com/study/wx/api/dto/WeChatAppLoginUserDTO.java
-./study-wx/study-wx-api/src/main/java/com/study/wx/api/dto/WeChatSilenceLoginDTO.java
-./study-wx/study-wx-api/src/main/java/com/study/wx/api/inter/WxLoginApi.java
-./study-wx/study-wx-api/src/main/java/com/study/wx/api/service/WxLoginService.java
-./study-wx/study-wx-api/src/main/java/com/study/wx/api/vo/WxUserLoginResponseVO.java
-./study-wx/study-wx-service/pom.xml
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/StudyWxApplication.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/config/WxMiniProgramProperties.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/controller/WxLoginController.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/domain/WeChatAccessTokenResponseVO.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/domain/WeChatUserTokenResponseVO.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/domain/WechatAppletUserInfoResponseVO.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/feign/StudyAuthApiService.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/feign/StudyUserApiService.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/service/WxLoginServiceImpl.java
-./study-wx/study-wx-service/src/main/java/com/study/wx/service/utils/WxInteractionUtil.java
-./study-wx/study-wx-service/src/main/resources/application-local.yml
-./study-wx/study-wx-service/src/main/resources/application.yml
-./study-wx/study-wx-service/src/main/resources/logback-spring.xml
-./wx-nacos-deps.log
+卷 数据 的文件夹 PATH 列表
+卷序列号为 000000E4 0216:0C15
+E:.
+|   .gitignore
+|   pom.xml
+|   project-tree.txt
+|   PROJECT_INTRO.md
+|   study-exam-service.iml
+|   wx-nacos-deps.log
+|   
++---.idea
+|   |   .gitignore
+|   |   claudeCodeTabState.xml
+|   |   compiler.xml
+|   |   dataSources.local.xml
+|   |   dataSources.xml
+|   |   encodings.xml
+|   |   jarRepositories.xml
+|   |   misc.xml
+|   |   modules.xml
+|   |   sqldialects.xml
+|   |   vcs.xml
+|   |   workspace.xml
+|   |   
+|   +---dataSources
+|   |   |   873d8e5b-a294-494b-870d-fd78828b3591.xml
+|   |   |   data_sources_history.xml
+|   |   |   
+|   |   \---873d8e5b-a294-494b-870d-fd78828b3591
+|   |       \---storage_v2
+|   |           \---_src_
+|   |               \---schema
+|   |                       information_schema.FNRwLQ.meta
+|   |                       mysql.osA4Bg.meta
+|   |                       performance_schema.kIw0nw.meta
+|   |                       sys.zb4BAA.meta
+|   |                       
+|   \---mybatisx
+|           templates.xml
+|           
++---logfile
+|       study-gateway.log
+|       study-gateway.log.2026-09-04.0.log
+|       study-gateway.log.2026-09-07.0.log
+|       study-gateway.log.2026-09-08.0.log
+|       study-gateway.log.2026-09-09.0.log
+|       study-gateway.log.2026-09-10.0.log
+|       study-wx.log
+|       study-wx.log.2026-09-04.0.log
+|       study-wx.log.2026-09-07.0.log
+|       study-wx.log.2026-09-10.0.log
+|       
++---study-ai
+|   |   pom.xml
+|   |   study-ai.iml
+|   |   
+|   +---study-ai-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---ai
+|   |                           \---api
+|   |                               +---dto
+|   |                               +---entity
+|   |                               +---response
+|   |                               +---service
+|   |                               \---vo
+|   \---study-ai-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           \---main
+|               +---java
+|               |   \---com
+|               |       \---study
+|               |           \---ai
+|               |               \---service
+|               |                   |   StudyAiApplication.java
+|               |                   |   
+|               |                   \---controller
+|               |                           StudyAiController.java
+|               |                           
+|               \---resources
+|                       application.yml
+|                       
++---study-auth
+|   |   pom.xml
+|   |   
+|   +---study-auth-api
+|   |   |   pom.xml
+|   |   |   
+|   |   +---src
+|   |   |   \---main
+|   |   |       \---java
+|   |   |           \---com
+|   |   |               \---study
+|   |   |                   \---auth
+|   |   |                       \---api
+|   |   |                           +---dto
+|   |   |                           |       LoginRequest.java
+|   |   |                           |       RegisterRequest.java
+|   |   |                           |       
+|   |   |                           +---entity
+|   |   |                           |       StudyPermissionEntity.java
+|   |   |                           |       StudyRoleEntity.java
+|   |   |                           |       StudyRolePermissionEntity.java
+|   |   |                           |       StudyUserRoleEntity.java
+|   |   |                           |       
+|   |   |                           +---response
+|   |   |                           +---service
+|   |   |                           |       StudyAuthService.java
+|   |   |                           |       
+|   |   |                           \---vo
+|   |   \---target
+|   |       +---classes
+|   |       |   \---com
+|   |       |       \---study
+|   |       |           \---auth
+|   |       |               \---api
+|   |       |                   |   AuthApi.class
+|   |       |                   |   
+|   |       |                   +---dto
+|   |       |                   |       LoginRequest.class
+|   |       |                   |       RegisterRequest.class
+|   |       |                   |       
+|   |       |                   +---entity
+|   |       |                   |       StudyPermissionEntity.class
+|   |       |                   |       StudyRoleEntity.class
+|   |       |                   |       StudyRolePermissionEntity.class
+|   |       |                   |       StudyUserRoleEntity.class
+|   |       |                   |       
+|   |       |                   \---service
+|   |       |                           StudyAuthService.class
+|   |       |                           
+|   |       +---generated-sources
+|   |       |   \---annotations
+|   |       \---maven-status
+|   |           \---maven-compiler-plugin
+|   |               \---compile
+|   |                   \---default-compile
+|   |                           createdFiles.lst
+|   |                           inputFiles.lst
+|   |                           
+|   \---study-auth-service
+|       |   pom.xml
+|       |   
+|       +---src
+|       |   \---main
+|       |       +---java
+|       |       |   \---com
+|       |       |       \---study
+|       |       |           \---auth
+|       |       |               \---service
+|       |       |                   |   StudyAuthApplication.java
+|       |       |                   |   
+|       |       |                   +---controller
+|       |       |                   |   |   StudyAuthController.java
+|       |       |                   |   |   
+|       |       |                   |   \---api
+|       |       |                   |           StudyAuthApiController.java
+|       |       |                   |           
+|       |       |                   +---mapper
+|       |       |                   |       StudyPermissionMapper.java
+|       |       |                   |       StudyRoleMapper.java
+|       |       |                   |       StudyRolePermissionMapper.java
+|       |       |                   |       StudyUserRoleMapper.java
+|       |       |                   |       
+|       |       |                   \---service
+|       |       |                           StudyAuthServiceImpl.java
+|       |       |                           
+|       |       \---resources
+|       |           |   application-local.yml
+|       |           |   application.yml
+|       |           |   
+|       |           +---db
+|       |           |       data.sql
+|       |           |       schema.sql
+|       |           |       
+|       |           \---mapper
+|       |                   StudyPermissionMapper.xml
+|       |                   StudyRoleMapper.xml
+|       |                   StudyRolePermissionMapper.xml
+|       |                   StudyUserRoleMapper.xml
+|       |                   
+|       \---target
+|           +---classes
+|           |   |   application-local.yml
+|           |   |   application.yml
+|           |   |   
+|           |   +---com
+|           |   |   \---study
+|           |   |       \---auth
+|           |   |           \---service
+|           |   |               |   StudyAuthApplication.class
+|           |   |               |   
+|           |   |               +---controller
+|           |   |               |   |   AuthController.class
+|           |   |               |   |   
+|           |   |               |   \---api
+|           |   |               |           StudyAuthApiController.class
+|           |   |               |           
+|           |   |               +---mapper
+|           |   |               |       StudyPermissionMapper.class
+|           |   |               |       StudyRoleMapper.class
+|           |   |               |       StudyRolePermissionMapper.class
+|           |   |               |       StudyUserRoleMapper.class
+|           |   |               |       
+|           |   |               \---service
+|           |   |                       StudyAuthServiceImpl.class
+|           |   |                       
+|           |   +---db
+|           |   |       data.sql
+|           |   |       schema.sql
+|           |   |       
+|           |   \---mapper
+|           |           StudyPermissionMapper.xml
+|           |           StudyRoleMapper.xml
+|           |           StudyRolePermissionMapper.xml
+|           |           StudyUserRoleMapper.xml
+|           |           
+|           +---generated-sources
+|           |   \---annotations
+|           \---maven-status
+|               \---maven-compiler-plugin
+|                   \---compile
+|                       \---default-compile
+|                               createdFiles.lst
+|                               inputFiles.lst
+|                               
++---study-common
+|   |   pom.xml
+|   |   study-common.iml
+|   |   
+|   +---src
+|   |   \---main
+|   |       \---java
+|   |           \---com
+|   |               \---study
+|   |                   \---common
+|   |                       \---core
+|   |                           +---config
+|   |                           |       CommonBeanConfig.java
+|   |                           |       
+|   |                           +---constant
+|   |                           |       ServiceNamesConstant.java
+|   |                           |       StudyConstant.java
+|   |                           |       
+|   |                           +---enumConstants
+|   |                           |       DicEnum.java
+|   |                           |       ErrorCodeEnum.java
+|   |                           |       RedisEnum.java
+|   |                           |       
+|   |                           +---model
+|   |                           |       ResultMode.java
+|   |                           |       TokenInfo.java
+|   |                           |       
+|   |                           \---utils
+|   |                                   Base64Util.java
+|   |                                   BeanUtil.java
+|   |                                   HttpHelpUtil.java
+|   |                                   JwtUtil.java
+|   |                                   MapUtils.java
+|   |                                   PublicUtil.java
+|   |                                   RedisLockUtil.java
+|   |                                   RedisUtil.java
+|   |                                   RestInterface.java
+|   |                                   SnowFlake.java
+|   |                                   SpringContextUtil.java
+|   |                                   UtilityClass.java
+|   |                                   
+|   \---target
+|       +---classes
+|       |   \---com
+|       |       \---study
+|       |           \---common
+|       |               \---core
+|       |                   +---config
+|       |                   |       CommonBeanConfig.class
+|       |                   |       
+|       |                   +---constant
+|       |                   |       ServiceNamesConstant.class
+|       |                   |       StudyConstant.class
+|       |                   |       
+|       |                   +---enumConstants
+|       |                   |       DicEnum$WxUserStatusEnum.class
+|       |                   |       DicEnum.class
+|       |                   |       ErrorCodeEnum.class
+|       |                   |       RedisEnum$RedisExpirationTimeEnum.class
+|       |                   |       RedisEnum$RedisKeyEnum.class
+|       |                   |       RedisEnum.class
+|       |                   |       
+|       |                   +---model
+|       |                   |       ResultMode.class
+|       |                   |       TokenInfo.class
+|       |                   |       
+|       |                   \---utils
+|       |                           Base64Util.class
+|       |                           BeanUtil.class
+|       |                           HttpHelpUtil.class
+|       |                           JwtUtil.class
+|       |                           MapUtils$DateTimeSerializer.class
+|       |                           MapUtils.class
+|       |                           PublicUtil.class
+|       |                           RedisLockUtil.class
+|       |                           RedisUtil$JedisStatus.class
+|       |                           RedisUtil.class
+|       |                           RestInterface.class
+|       |                           SnowFlake.class
+|       |                           SpringContextUtil.class
+|       |                           UtilityClass.class
+|       |                           
+|       +---generated-sources
+|       |   \---annotations
+|       \---maven-status
+|           \---maven-compiler-plugin
+|               \---compile
+|                   \---default-compile
+|                           createdFiles.lst
+|                           inputFiles.lst
+|                           
++---study-exam
+|   |   pom.xml
+|   |   
+|   +---study-exam-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---exam
+|   |                           \---api
+|   |                               +---dto
+|   |                               |       UserExamInitializeRequest.java
+|   |                               |       
+|   |                               +---entity
+|   |                               +---response
+|   |                               |       ExamAttributeResponse.java
+|   |                               |       ExamCategoryResponse.java
+|   |                               |       ExamResponse.java
+|   |                               |       UserExamResponse.java
+|   |                               |       
+|   |                               +---service
+|   |                               \---vo
+|   \---study-exam-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           +---main
+|           |   +---java
+|           |   |   \---com
+|           |   |       \---study
+|           |   |           \---exam
+|           |   |               \---service
+|           |   |                   |   StudyExamApplication.java
+|           |   |                   |   
+|           |   |                   +---controller
+|           |   |                   |       StudyExamController.java
+|           |   |                   |       
+|           |   |                   +---mapper
+|           |   |                   \---service
+|           |   |                       |   ExamCatalogService.java
+|           |   |                       |   UserExamService.java
+|           |   |                       |   
+|           |   |                       \---impl
+|           |   |                               ExamCatalogServiceImpl.java
+|           |   |                               UserExamServiceImpl.java
+|           |   |                               
+|           |   \---resources
+|           |       +---mapper
+|           |       \---sql
+|           |               data.sql
+|           |               ddl.sql
+|           |               
+|           \---test
+|               \---java
++---study-file
+|   |   pom.xml
+|   |   
+|   +---study-file-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---file
+|   |                           \---api
+|   |                               +---dto
+|   |                               +---entity
+|   |                               +---response
+|   |                               +---service
+|   |                               \---vo
+|   \---study-file-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           \---main
+|               +---java
+|               |   \---com
+|               |       \---study
+|               |           \---file
+|               |               \---service
+|               |                   |   StudyFileApplication.java
+|               |                   |   
+|               |                   \---controller
+|               |                           StudyFileController.java
+|               |                           
+|               \---resources
+|                       application.yml
+|                       
++---study-gateway
+|   |   pom.xml
+|   |   
+|   +---study-gateway-api
+|   |   |   pom.xml
+|   |   |   
+|   |   +---src
+|   |   |   \---main
+|   |   |       \---java
+|   |   |           \---com
+|   |   |               \---study
+|   |   |                   \---gateway
+|   |   |                       \---api
+|   |   \---target
+|   |       +---classes
+|   |       \---generated-sources
+|   |           \---annotations
+|   \---study-gateway-service
+|       |   pom.xml
+|       |   
+|       +---src
+|       |   \---main
+|       |       +---java
+|       |       |   \---com
+|       |       |       \---study
+|       |       |           \---gateway
+|       |       |               \---service
+|       |       |                       StudyGatewayApplication.java
+|       |       |                       
+|       |       \---resources
+|       |               application.yml
+|       |               bootstrap-local.properties
+|       |               bootstrap.yml
+|       |               logback-spring.xml
+|       |               
+|       \---target
+|           +---classes
+|           |   |   application.yml
+|           |   |   bootstrap-local.properties
+|           |   |   bootstrap.yml
+|           |   |   logback-spring.xml
+|           |   |   
+|           |   \---com
+|           |       \---study
+|           |           \---gateway
+|           |               \---service
+|           |                       StudyGatewayApplication.class
+|           |                       
+|           \---generated-sources
+|               \---annotations
++---study-member
+|   |   pom.xml
+|   |   
+|   +---study-member-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---member
+|   |                           \---api
+|   |                               +---dto
+|   |                               +---entity
+|   |                               |       MemberPlanEntity.java
+|   |                               |       UserMemberEntity.java
+|   |                               |       
+|   |                               +---response
+|   |                               +---service
+|   |                               \---vo
+|   \---study-member-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           \---main
+|               +---java
+|               |   \---com
+|               |       \---study
+|               |           \---member
+|               |               \---service
+|               |                   |   StudyMemberApplication.java
+|               |                   |   
+|               |                   \---controller
+|               |                           StudyMemberController.java
+|               |                           
+|               \---resources
+|                       application.yml
+|                       
++---study-notification
+|   |   pom.xml
+|   |   
+|   +---study-notification-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---notification
+|   |                           \---api
+|   |                               +---dto
+|   |                               +---entity
+|   |                               +---response
+|   |                               +---service
+|   |                               \---vo
+|   \---study-notification-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           \---main
+|               +---java
+|               |   \---com
+|               |       \---study
+|               |           \---notification
+|               |               \---service
+|               |                   |   StudyNotificationApplication.java
+|               |                   |   
+|               |                   \---controller
+|               |                           StudyNotificationController.java
+|               |                           
+|               \---resources
+|                       application.yml
+|                       
++---study-plan
+|   |   pom.xml
+|   |   
+|   +---study-plan-api
+|   |   |   pom.xml
+|   |   |   
+|   |   \---src
+|   |       \---main
+|   |           \---java
+|   |               \---com
+|   |                   \---study
+|   |                       \---plan
+|   |                           \---api
+|   |                               +---dto
+|   |                               +---entity
+|   |                               +---response
+|   |                               +---sevice
+|   |                               \---vo
+|   \---study-plan-service
+|       |   pom.xml
+|       |   
+|       \---src
+|           \---main
+|               +---java
+|               |   \---com
+|               |       \---study
+|               |           \---plan
+|               |               \---service
+|               |                   |   StudyPlanApplication.java
+|               |                   |   
+|               |                   \---controller
+|               |                           StudyPlanController.java
+|               |                           
+|               \---resources
+|                       application.yml
+|                       
++---study-user
+|   |   pom.xml
+|   |   
+|   +---study-user-api
+|   |   |   pom.xml
+|   |   |   
+|   |   +---src
+|   |   |   \---main
+|   |   |       \---java
+|   |   |           \---com
+|   |   |               \---study
+|   |   |                   \---user
+|   |   |                       \---api
+|   |   |                           |   UserNoExhaustedException.java
+|   |   |                           |   
+|   |   |                           +---dto
+|   |   |                           |       StudyWxUserRegisterDTO.java
+|   |   |                           |       
+|   |   |                           +---entity
+|   |   |                           |       StudyUserEntity.java
+|   |   |                           |       StudyWxUserEntity.java
+|   |   |                           |       
+|   |   |                           +---response
+|   |   |                           |       StudyUserResponse.java
+|   |   |                           |       StudyWxUserResponse.java
+|   |   |                           |       
+|   |   |                           +---service
+|   |   |                           |       StudyUserService.java
+|   |   |                           |       StudyWxUserService.java
+|   |   |                           |       
+|   |   |                           +---utils
+|   |   |                           |       UserIdGenerator.java
+|   |   |                           |       
+|   |   |                           \---vo
+|   |   \---target
+|   |       +---classes
+|   |       |   \---com
+|   |       |       \---study
+|   |       |           \---user
+|   |       |               \---api
+|   |       |                   |   UserNoExhaustedException.class
+|   |       |                   |   
+|   |       |                   +---dto
+|   |       |                   |       StudyWxUserRegisterDTO.class
+|   |       |                   |       
+|   |       |                   +---entity
+|   |       |                   |       StudyUserEntity.class
+|   |       |                   |       StudyWxUserEntity.class
+|   |       |                   |       
+|   |       |                   +---response
+|   |       |                   |       StudyUserResponse.class
+|   |       |                   |       StudyWxUserResponse.class
+|   |       |                   |       
+|   |       |                   +---service
+|   |       |                   |       StudyUserService.class
+|   |       |                   |       StudyWxUserService.class
+|   |       |                   |       
+|   |       |                   \---utils
+|   |       |                           UserIdGenerator.class
+|   |       |                           
+|   |       +---generated-sources
+|   |       |   \---annotations
+|   |       \---maven-status
+|   |           \---maven-compiler-plugin
+|   |               \---compile
+|   |                   \---default-compile
+|   |                           createdFiles.lst
+|   |                           inputFiles.lst
+|   |                           
+|   \---study-user-service
+|       |   pom.xml
+|       |   
+|       +---src
+|       |   \---main
+|       |       +---java
+|       |       |   \---com
+|       |       |       \---study
+|       |       |           \---user
+|       |       |               \---service
+|       |       |                   |   StudyUserApplication.java
+|       |       |                   |   
+|       |       |                   +---controller
+|       |       |                   |   |   StudyUserController.java
+|       |       |                   |   |   
+|       |       |                   |   \---api
+|       |       |                   |           StudyUserApiController.java
+|       |       |                   |           
+|       |       |                   +---mapper
+|       |       |                   |       StudyUserMapper.java
+|       |       |                   |       StudyWxUserMapper.java
+|       |       |                   |       
+|       |       |                   \---service
+|       |       |                           StudyUserServiceImpl.java
+|       |       |                           StudyWxUserServiceImpl.java
+|       |       |                           
+|       |       \---resources
+|       |           |   application-local.yml
+|       |           |   application.yml
+|       |           |   logback-spring.xml
+|       |           |   
+|       |           +---db
+|       |           |       data.sql
+|       |           |       schema.sql
+|       |           |       
+|       |           \---mapper
+|       |                   StudyUserMapper.xml
+|       |                   StudyWxUserMapper.xml
+|       |                   
+|       \---target
+|           +---classes
+|           |   |   application-local.yml
+|           |   |   application.yml
+|           |   |   logback-spring.xml
+|           |   |   
+|           |   +---com
+|           |   |   \---study
+|           |   |       \---user
+|           |   |           \---service
+|           |   |               |   StudyUserApplication.class
+|           |   |               |   
+|           |   |               +---controller
+|           |   |               |   \---api
+|           |   |               |           StudyUserApiController.class
+|           |   |               |           
+|           |   |               +---mapper
+|           |   |               |       StudyUserMapper.class
+|           |   |               |       StudyWxUserMapper.class
+|           |   |               |       
+|           |   |               \---service
+|           |   |                       StudyUserServiceImpl.class
+|           |   |                       StudyWxUserServiceImpl.class
+|           |   |                       
+|           |   +---db
+|           |   |       data.sql
+|           |   |       schema.sql
+|           |   |       
+|           |   \---mapper
+|           |           StudyUserMapper.xml
+|           |           StudyWxUserMapper.xml
+|           |           
+|           \---generated-sources
+|               \---annotations
+\---study-wx
+    |   pom.xml
+    |   
+    +---study-wx-api
+    |   |   pom.xml
+    |   |   
+    |   +---src
+    |   |   \---main
+    |   |       \---java
+    |   |           \---com
+    |   |               \---study
+    |   |                   \---wx
+    |   |                       \---api
+    |   |                           +---dto
+    |   |                           |       WeChatAppLoginUserDTO.java
+    |   |                           |       WeChatSilenceLoginDTO.java
+    |   |                           |       
+    |   |                           +---entity
+    |   |                           +---feign
+    |   |                           |       StudyAuthApiService.java
+    |   |                           |       StudyUserApiService.java
+    |   |                           |       
+    |   |                           +---response
+    |   |                           +---service
+    |   |                           |       WxLoginService.java
+    |   |                           |       
+    |   |                           \---vo
+    |   |                                   WxUserLoginResponseVO.java
+    |   |                                   
+    |   \---target
+    |       +---classes
+    |       |   \---com
+    |       |       \---study
+    |       |           \---wx
+    |       |               \---api
+    |       |                   +---dto
+    |       |                   |       WeChatAppLoginUserDTO.class
+    |       |                   |       WeChatSilenceLoginDTO.class
+    |       |                   |       
+    |       |                   +---inter
+    |       |                   |       WxLoginApi.class
+    |       |                   |       
+    |       |                   +---service
+    |       |                   |       WxLoginService.class
+    |       |                   |       
+    |       |                   \---vo
+    |       |                           WxUserLoginResponseVO.class
+    |       |                           
+    |       \---generated-sources
+    |           \---annotations
+    \---study-wx-service
+        |   pom.xml
+        |   
+        +---src
+        |   +---main
+        |   |   +---java
+        |   |   |   \---com
+        |   |   |       \---study
+        |   |   |           \---wx
+        |   |   |               \---service
+        |   |   |                   |   StudyWxApplication.java
+        |   |   |                   |   
+        |   |   |                   +---config
+        |   |   |                   |       WxMiniProgramProperties.java
+        |   |   |                   |       
+        |   |   |                   +---controller
+        |   |   |                   |       StudyWxLoginController.java
+        |   |   |                   |       
+        |   |   |                   +---domain
+        |   |   |                   |       WeChatAccessTokenResponseVO.java
+        |   |   |                   |       WechatAppletUserInfoResponseVO.java
+        |   |   |                   |       WeChatUserTokenResponseVO.java
+        |   |   |                   |       
+        |   |   |                   +---service
+        |   |   |                   |       WxLoginServiceImpl.java
+        |   |   |                   |       
+        |   |   |                   \---utils
+        |   |   |                           WxInteractionUtil.java
+        |   |   |                           
+        |   |   \---resources
+        |   |           application-local.yml
+        |   |           application.yml
+        |   |           logback-spring.xml
+        |   |           
+        |   \---test
+        |       \---java
+        \---target
+            +---classes
+            |   |   application-local.yml
+            |   |   application.yml
+            |   |   logback-spring.xml
+            |   |   
+            |   \---com
+            |       \---study
+            |           \---wx
+            |               \---service
+            |                   |   StudyWxApplication.class
+            |                   |   
+            |                   +---config
+            |                   |       WxMiniProgramProperties.class
+            |                   |       
+            |                   +---controller
+            |                   |       WxLoginController.class
+            |                   |       
+            |                   +---domain
+            |                   |       WeChatAccessTokenResponseVO.class
+            |                   |       WechatAppletUserInfoResponseVO.class
+            |                   |       WeChatUserTokenResponseVO.class
+            |                   |       
+            |                   +---feign
+            |                   |       StudyAuthApiService.class
+            |                   |       StudyUserApiService.class
+            |                   |       
+            |                   +---service
+            |                   |       WxLoginServiceImpl.class
+            |                   |       
+            |                   \---utils
+            |                           WxInteractionUtil$WechatApiCall.class
+            |                           WxInteractionUtil.class
+            |                           
+            \---generated-sources
+                \---annotations

@@ -1,4 +1,4 @@
-package com.study.exam.service.service;
+package com.study.exam.api.service;
 
 import com.study.exam.api.response.ExamAttributeResponse;
 import com.study.exam.api.response.ExamCategoryResponse;
