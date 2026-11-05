@@ -31,6 +31,13 @@ public class StudyAuthServiceImpl implements StudyAuthService {
     private StudyRolePermissionMapper studyRolePermissionMapper;
 
 
+    /**
+     * 获取jwt鉴权token
+     *
+     * @param studyUser
+     * @param token
+     * @return
+     */
     @Override
     public String getJwtToken(StudyUserResponse studyUser, String token) {
         TokenInfo tokenInfo = new TokenInfo();
@@ -47,6 +54,6 @@ public class StudyAuthServiceImpl implements StudyAuthService {
         }
 
         String tokenInfoString = JSON.toJSONString(tokenInfo);
-        return JwtUtil.getInstance().generateToken(tokenInfoString);
+        return "Bearer " + JwtUtil.getInstance().generateToken(tokenInfoString);
     }
 }

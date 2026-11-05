@@ -1,5 +1,6 @@
 package com.study.gateway.service;
 
+import com.study.common.core.utils.JwtUtil;
 import com.study.common.core.utils.RedisUtil;
 import com.study.common.core.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class StudyGatewayApplication {
 
         ConfigurableApplicationContext context = SpringApplication.run(StudyGatewayApplication.class, args);
         SpringContextUtil.setApplicationContext(context);
+        JwtUtil.getInstance().init(context);
         RedisUtil.initialPool();
 
         log.info("------StudyGatewayApplication Start success-------");

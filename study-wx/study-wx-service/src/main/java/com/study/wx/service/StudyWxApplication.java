@@ -16,7 +16,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.study.wx.service.feign")
+@EnableFeignClients(basePackages = "com.study.wx.api.feign")
 @EnableConfigurationProperties(WxMiniProgramProperties.class)
 @SpringBootApplication(scanBasePackages = "com.study")
 public class StudyWxApplication {
