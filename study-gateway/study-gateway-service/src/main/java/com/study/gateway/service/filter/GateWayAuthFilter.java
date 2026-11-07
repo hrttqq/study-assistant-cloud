@@ -9,6 +9,7 @@ import com.study.common.core.utils.JwtUtil;
 import com.study.common.core.utils.RedisUtil;
 import com.study.common.core.utils.SpringContextUtil;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +70,7 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
             if (path.contains(s)) {
                 log.info("==========path:{}匹配gateway白名单路径，无需鉴权", path);
                 //直接通过，传输到下一级
-                return chain.filter(exchange);
+                return chain.filter(sanitized);
             }
         }
 
@@ -78,22 +79,44 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
         String authorization = request.getHeaders().getFirst(JwtUtil.getInstance().getTokenHeader());
         log.info("==========获取当前登录token:{}", authorization);
         String token = extractBearerToken(authorization);
-        ResultMode<String> resultMode = checkAuth(path, token);
+        ResultMode<TokenInfo> resultMode = checkAuth(path, token);
         if (resultMode.getSucceed()) {
             log.info("================鉴权结束");
             log.info("================checkAuth success===================");
+            TokenInfo tokenInfo = resultMode.getData();
+
+            ServerHttpRequest newRequest = request.mutate()
+                    .headers(headers -> {
+
+                        headers.set(USER_ID, tokenInfo.getUserId());
+
+                        if (StringUtils.isNotBlank(tokenInfo.getLoginId())) {
+                            headers.set(LOGIN_ID, tokenInfo.getLoginId());
+                        }
+
+                        if (StringUtils.isNotBlank(tokenInfo.getWxUserId())) {
+                            headers.set(WX_USER_ID, tokenInfo.getWxUserId());
+                        }
+
+                        if (StringUtils.isNotBlank(tokenInfo.getTokenId())) {
+                            headers.set(TOKEN_ID, tokenInfo.getTokenId());
+                        }
+                    })
+                    .build();
+
+            ServerWebExchange newExchange = sanitized.mutate()
+                    .request(newRequest)
+                    .build();
             //将登录信息保存到下一级
-            ServerHttpRequest newRequest = request.mutate().header(JwtUtil.getInstance().getTokenHeader(), token).build();
-            ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
             return chain.filter(newExchange);
         } else {
             //都设置返回状态码为最接受
-            return buildReqsponse(response, HttpStatus.ACCEPTED, resultMode);
+            return buildResponse(response, HttpStatus.ACCEPTED, resultMode);
         }
     }
 
-    private ResultMode<String> checkAuth(String path, String token) {
-        ResultMode<String> resultMode = new ResultMode<>();
+    private ResultMode<TokenInfo> checkAuth(String path, String token) {
+        ResultMode<TokenInfo> resultMode = new ResultMode<>();
         // 如果未携带token
         if (StringUtils.isBlank(token)) {
             //返回登录令牌为空错误
@@ -103,7 +126,24 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
             return resultMode;
         }
         // 获取签名信息
-        Claims claims = JwtUtil.getInstance().parseClaims(token);
+        Claims claims;
+
+        try {
+            claims = JwtUtil.getInstance().parseClaims(token);
+        } catch (JwtException | IllegalArgumentException e) {
+
+            log.warn("JWT校验失败：{}", e.getMessage());
+
+            resultMode.setErrCode(
+                    ErrorCodeEnum.CODE_100004.getCode());
+
+            resultMode.setErrMsg(
+                    ErrorCodeEnum.CODE_100004.getDesc());
+
+            resultMode.setSucceed(false);
+
+            return resultMode;
+        }
         log.info("===========签名信息claims:{}", claims);
 
         // 判断签名是否存在或过期
@@ -119,7 +159,18 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
         //从当前token中得到用户id
         String subject = claims.getSubject();
         // 判断当前用户是否在另一个客户端登陆了，这里目的是保证一个用户只能在一个客户端上登录
-        TokenInfo tokenInfo = JSON.parseObject(subject, TokenInfo.class);
+        TokenInfo tokenInfo;
+
+        try {
+            tokenInfo = JSON.parseObject(subject, TokenInfo.class);
+        } catch (Exception e) {
+            log.warn("JWT用户信息解析失败");
+            return authFail(resultMode, ErrorCodeEnum.CODE_401);
+        }
+
+        if (tokenInfo == null || StringUtils.isBlank(tokenInfo.getUserId())) {
+            return authFail(resultMode, ErrorCodeEnum.CODE_401);
+        }
 
         String userId = tokenInfo.getUserId();
         //从redis中获取登录时存入的token
@@ -140,8 +191,20 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
             resultMode.setSucceed(false);
             return resultMode;
         }
+        resultMode.setData(tokenInfo);
         resultMode.setSucceed(true);
         return resultMode;
+    }
+
+    private ResultMode<TokenInfo> authFail(
+            ResultMode<TokenInfo> result,
+            ErrorCodeEnum errorCode) {
+
+        result.setSucceed(false);
+        result.setErrCode(errorCode.getCode());
+        result.setErrMsg(errorCode.getDesc());
+
+        return result;
     }
 
 
@@ -186,7 +249,7 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
      * @param resultMode 返回实体
      * @return Mono<Void>
      */
-    public static Mono<Void> buildReqsponse(ServerHttpResponse response, HttpStatus httpStatus, ResultMode<String> resultMode) {
+    public static Mono<Void> buildResponse(ServerHttpResponse response, HttpStatus httpStatus, ResultMode<?> resultMode) {
         response.setStatusCode(httpStatus);
         HttpHeaders httpHeaders = response.getHeaders();
         httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
