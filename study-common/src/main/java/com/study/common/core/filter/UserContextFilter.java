@@ -31,13 +31,13 @@ public class UserContextFilter extends OncePerRequestFilter {
             "X-Study-User-Id";
 
     private static final String HEADER_LOGIN_ID =
-            "X-Login-Id";
+            "X-Study-Login-Id";
 
     private static final String HEADER_WX_USER_ID =
-            "X-Wx-User-Id";
+            "X-Study-Wx-User-Id";
 
     private static final String HEADER_TOKEN_ID =
-            "X-Token-Id";
+            "X-Study-Token-Id";
 
     private static final String HEADER_USERNAME =
             "X-Username";

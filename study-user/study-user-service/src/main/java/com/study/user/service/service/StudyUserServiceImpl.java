@@ -38,7 +38,7 @@ public class StudyUserServiceImpl implements StudyUserService {
 
     private StudyUserResponse convertToResponse(StudyUserEntity studyUserEntity) {
         StudyUserResponse response = BeanUtil.shallowCopy(studyUserEntity, StudyUserResponse.class);
-        response.setStudyUserId(String.valueOf(studyUserEntity.getId()));
+        response.setStudyUserId(String.valueOf(studyUserEntity.getUserId()));
         return response;
     }
 }

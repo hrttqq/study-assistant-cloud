@@ -9,9 +9,7 @@ public interface UserExamService {
     /**
      * 用户首次初始化备考目标
      */
-    UserExamResponse initialize(
-            String studyUserId,
-            UserExamInitializeRequest request);
+    UserExamResponse initialize(String studyUserId, UserExamInitializeRequest request);
 
     /**
      * 获取用户当前备考目标

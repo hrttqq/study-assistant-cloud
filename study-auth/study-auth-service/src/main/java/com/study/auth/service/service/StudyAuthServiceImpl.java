@@ -54,6 +54,6 @@ public class StudyAuthServiceImpl implements StudyAuthService {
         }
 
         String tokenInfoString = JSON.toJSONString(tokenInfo);
-        return "Bearer " + JwtUtil.getInstance().generateToken(tokenInfoString);
+        return JwtUtil.getInstance().generateToken(tokenInfoString);
     }
 }

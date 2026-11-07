@@ -16,6 +16,7 @@ import com.study.exam.service.mapper.ExamCategoryMapper;
 import com.study.exam.service.mapper.ExamMapper;
 import com.study.exam.service.mapper.UserExamMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,19 +31,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class UserExamServiceImpl implements UserExamService {
 
-    private final UserExamMapper userExamMapper;
-    private final ExamMapper examMapper;
-    private final ExamCategoryMapper categoryMapper;
-    private final ExamAttributeMapper attributeMapper;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private UserExamMapper userExamMapper;
+    @Autowired
+    private ExamMapper examMapper;
+    @Autowired
+    private ExamCategoryMapper categoryMapper;
+    @Autowired
+    private ExamAttributeMapper attributeMapper;
 
     @Override
-    public UserExamResponse initialize(
-            String studyUserId,
-            UserExamInitializeRequest request) {
+    public UserExamResponse initialize(String studyUserId, UserExamInitializeRequest request) {
 
         checkUserId(studyUserId);
 

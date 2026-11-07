@@ -28,8 +28,7 @@ public class UserExamController {
     @PostMapping("/initialize")
     public ResultMode<UserExamResponse> initialize(@RequestBody UserExamInitializeRequest request) {
 
-        String userId =
-                UserContext.getCurrentUser().getUserId();
+        String userId = UserContext.getCurrentUser().getUserId();
 
 
         UserExamResponse data =

@@ -1,3 +1,4 @@
+/*
 
 package com.study.exam.service.config;
 
@@ -9,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import jakarta.annotation.PostConstruct;
 
-@Configuration
-@RequiredArgsConstructor
+//@Configuration
+//@RequiredArgsConstructor
 public class ExamJwtConfig {
 
     private final ApplicationContext applicationContext;
@@ -21,3 +22,4 @@ public class ExamJwtConfig {
                 (ConfigurableApplicationContext) applicationContext);
     }
 }
+*/

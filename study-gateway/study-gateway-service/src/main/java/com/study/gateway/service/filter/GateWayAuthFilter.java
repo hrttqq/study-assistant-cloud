@@ -40,7 +40,7 @@ public class GateWayAuthFilter implements GlobalFilter, Ordered {
     public static final String WX_USER_ID = "X-Study-Wx-User-Id";
     public static final String TOKEN_ID = "X-Study-Token-Id";
 
-    @Value("${auth.skip.urls}")
+    @Value("${auth.skip.urls:}")
     private String[] ignoreUri;
 
     @Override

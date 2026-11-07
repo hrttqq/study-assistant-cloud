@@ -10,5 +10,6 @@ public class StudyExamApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StudyExamApplication.class, args);
+        log.info("StudyExamApplication start success-------");
     }
 }
