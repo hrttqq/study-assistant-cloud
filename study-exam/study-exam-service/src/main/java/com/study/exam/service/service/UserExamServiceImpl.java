@@ -41,6 +41,8 @@ public class UserExamServiceImpl implements UserExamService {
     private ExamCategoryMapper categoryMapper;
     @Autowired
     private ExamAttributeMapper attributeMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public UserExamResponse initialize(String studyUserId, UserExamInitializeRequest request) {
