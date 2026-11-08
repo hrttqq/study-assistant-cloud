@@ -1,6 +1,3 @@
-
-package com.study.exam.api.response;
-
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,6 +12,10 @@ public class UserExamResponse {
     private String studyUserId;
 
     private Long examId;
+
+    private Long categoryId;
+
+    private String categoryName;
 
     private String examName;
 

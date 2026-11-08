@@ -1,0 +1,7 @@
+package com.study.plan.api.dto;
+
+/**
+ * 更新学习任务状态请求。
+ */
+public class PlanTaskStatusRequest {
+}
