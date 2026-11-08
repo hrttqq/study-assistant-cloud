@@ -7,7 +7,7 @@ import com.study.common.core.model.ResultMode;
 import com.study.common.core.model.TokenInfo;
 import com.study.common.core.utils.JwtUtil;
 import com.study.exam.api.dto.UserExamInitializeRequest;
-import com.study.exam.api.response.UserExamResponse;
+import com.study.exam.api.response.*;
 import com.study.exam.api.service.UserExamService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;

@@ -1,3 +1,4 @@
+package com.study.exam.api.response;
 import lombok.Data;
 
 import java.time.LocalDate;
