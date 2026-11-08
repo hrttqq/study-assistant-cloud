@@ -18,6 +18,7 @@ import com.study.wx.api.vo.WxUserLoginResponseVO;
 import com.study.wx.service.domain.WeChatUserTokenResponseVO;
 import com.study.wx.service.domain.WeChatAccessTokenResponseVO;
 import com.study.wx.api.feign.StudyAuthApiService;
+import com.study.wx.api.feign.StudyExamApiService;
 import com.study.wx.api.feign.StudyUserApiService;
 import com.study.wx.service.utils.WxInteractionUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,9 @@ public class WxLoginServiceImpl implements WxLoginService {
 
     @Autowired
     private StudyAuthApiService studyAuthApiService;
+
+    @Autowired
+    private StudyExamApiService studyExamApiService;
 
 
     private static final String WECHAT_LOGIN_KEY = "wechat_login_key";
@@ -239,13 +243,29 @@ public class WxLoginServiceImpl implements WxLoginService {
      */
     private WxUserLoginResponseVO getWeChatToken(StudyWxUserResponse oldOpenUser) {
         StudyUserResponse userInfo = studyUserApiService.getModelByLoginId(oldOpenUser.getStudyUserId());
+        if (userInfo == null || StringUtils.isBlank(userInfo.getStudyUserId())) {
+            throw new IllegalStateException("系统用户不存在");
+        }
+        boolean initialized = getUserInitialized(userInfo.getStudyUserId());
         String token = saveToken(userInfo);
         WxUserLoginResponseVO response = new WxUserLoginResponseVO();
         response.setToken(token);
         response.setStudyWxUserId(oldOpenUser.getWxuserId());
         response.setStudyUserId(oldOpenUser.getStudyUserId());
-        response.setInitialized(false);
+        response.setInitialized(initialized);
         return response;
+    }
+
+    /**
+     * 查询用户是否已在考试服务完成首次备考目标初始化。
+     */
+    private boolean getUserInitialized(String studyUserId) {
+        ResultMode<Map<String, Boolean>> result = studyExamApiService.initialized(studyUserId);
+        if (result == null || !result.getSucceed() || result.getData() == null
+                || result.getData().get("initialized") == null) {
+            throw new IllegalStateException("查询用户初始化状态失败");
+        }
+        return result.getData().get("initialized");
     }
 
 

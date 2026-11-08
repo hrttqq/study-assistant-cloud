@@ -37,3 +37,6 @@ studyWxUser:
 
 studyAuth:
   host: http://127.0.0.1:9093
+
+studyExam:
+  host: ${STUDY_EXAM_HOST:http://127.0.0.1:8089}
