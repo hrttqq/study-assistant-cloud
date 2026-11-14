@@ -4,6 +4,7 @@ import com.study.common.core.model.ResultMode;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -14,5 +15,5 @@ import java.util.Map;
 public interface StudyExamApiService {
 
     @GetMapping("/api/studyExam/user/initialized")
-    ResultMode<Map<String, Boolean>> initialized(@RequestHeader("X-Study-User-Id") String studyUserId);
+    Map<String, Boolean> initialized(@RequestParam("studyUserId") String studyUserId);
 }

@@ -21,5 +21,5 @@ public interface UserExamService {
      */
     boolean isInitialized(String studyUserId);
 
-    UserExamResponse getById(String studyUserId, Long userExamId);
+    UserExamResponse getById(Long userExamId);
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/plan")
+@RequestMapping("/plans")
 public class StudyPlanController {
 
 

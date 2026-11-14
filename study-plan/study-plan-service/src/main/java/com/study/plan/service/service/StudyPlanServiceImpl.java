@@ -9,7 +9,6 @@ import com.study.plan.api.entity.StudyPlanEntity;
 import com.study.plan.api.feign.StudyExamApiService;
 import com.study.plan.api.response.StudyPlanResponse;
 import com.study.plan.api.service.StudyPlanService;
-import com.study.plan.service.client.StudyExamClient;
 import com.study.plan.service.mapper.StudyPlanMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,16 +156,11 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             throw new IllegalArgumentException("考试项目不能为空");
         }
 
-        ResultMode<UserExamResponse> result =
-                studyExamApiService.getById(userExamId);
+        UserExamResponse result =
+                studyExamApiService.getUserExam(userExamId);
 
-        if (result == null || !result.getSucceed()
-                || result.getData() == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "考试项目不存在或无权访问");
-        }
 
-        return result.getData();
+        return result;
     }
 
     private void validatePlan(

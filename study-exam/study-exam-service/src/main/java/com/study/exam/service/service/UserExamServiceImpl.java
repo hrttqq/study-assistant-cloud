@@ -124,9 +124,8 @@ public class UserExamServiceImpl implements UserExamService {
     }
 
     @Override
-    public UserExamResponse getById(String studyUserId, Long userExamId) {
+    public UserExamResponse getById(Long userExamId) {
 
-        checkUserId(studyUserId);
 
         if (userExamId == null) {
             throw new IllegalArgumentException("考试记录ID不能为空");
@@ -134,8 +133,7 @@ public class UserExamServiceImpl implements UserExamService {
 
         UserExamEntity entity = userExamMapper.selectOne(
                 new LambdaQueryWrapper<UserExamEntity>()
-                        .eq(UserExamEntity::getId, userExamId)
-                        .eq(UserExamEntity::getStudyUserId, studyUserId));
+                        .eq(UserExamEntity::getId, userExamId));
 
         return toResponse(entity);
     }

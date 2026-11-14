@@ -260,12 +260,8 @@ public class WxLoginServiceImpl implements WxLoginService {
      * 查询用户是否已在考试服务完成首次备考目标初始化。
      */
     private boolean getUserInitialized(String studyUserId) {
-        ResultMode<Map<String, Boolean>> result = studyExamApiService.initialized(studyUserId);
-        if (result == null || !result.getSucceed() || result.getData() == null
-                || result.getData().get("initialized") == null) {
-            throw new IllegalStateException("查询用户初始化状态失败");
-        }
-        return result.getData().get("initialized");
+        Map<String, Boolean> result = studyExamApiService.initialized(studyUserId);
+        return result.get("initialized");
     }
 
 

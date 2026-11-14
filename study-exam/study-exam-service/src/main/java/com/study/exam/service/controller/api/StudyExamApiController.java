@@ -20,16 +20,17 @@ public class StudyExamApiController {
     private UserExamService userExamService;
 
     @GetMapping("/initialized")
-    public ResultMode<Map<String, Boolean>> initialized() {
+    public Map<String, Boolean> initialized(@RequestParam String userId) {
 
-        String userId =
-                UserContext.getCurrentUser().getUserId();
-
-        ResultMode<Map<String, Boolean>> result = new ResultMode<>();
-        result.setData(Map.of(
+        Map<String, Boolean> result = Map.of(
                 "initialized",
                 userExamService.isInitialized(userId)
-        ));
+        );
         return result;
+    }
+
+    @PostMapping("/getUserExam")
+    UserExamResponse getUserExam(@RequestParam Long userExamId) {
+        return userExamService.getById(userExamId);
     }
 }
