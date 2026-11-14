@@ -11,6 +11,8 @@ import com.study.exam.api.response.*;
 import com.study.exam.api.service.UserExamService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,12 +20,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/exam/user")
 public class UserExamController {
 
-    private final UserExamService userExamService;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private UserExamService userExamService;
+
 
     @PostMapping("/initialize")
     public ResultMode<UserExamResponse> initialize(@RequestBody UserExamInitializeRequest request) {
@@ -39,6 +41,7 @@ public class UserExamController {
         return result;
     }
 
+
     @GetMapping("/current")
     public ResultMode<UserExamResponse> current() {
 
@@ -50,17 +53,4 @@ public class UserExamController {
         return result;
     }
 
-    @GetMapping("/initialized")
-    public ResultMode<Map<String, Boolean>> initialized() {
-
-        String userId =
-                UserContext.getCurrentUser().getUserId();
-
-        ResultMode<Map<String, Boolean>> result = new ResultMode<>();
-        result.setData(Map.of(
-                "initialized",
-                userExamService.isInitialized(userId)
-        ));
-        return result;
-    }
 }

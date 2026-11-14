@@ -20,4 +20,6 @@ public interface UserExamService {
      * 是否已经完成首次初始化
      */
     boolean isInitialized(String studyUserId);
+
+    UserExamResponse getById(String studyUserId, Long userExamId);
 }

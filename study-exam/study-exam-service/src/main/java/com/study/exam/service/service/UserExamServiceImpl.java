@@ -123,6 +123,23 @@ public class UserExamServiceImpl implements UserExamService {
         return findInitial(studyUserId) != null;
     }
 
+    @Override
+    public UserExamResponse getById(String studyUserId, Long userExamId) {
+
+        checkUserId(studyUserId);
+
+        if (userExamId == null) {
+            throw new IllegalArgumentException("考试记录ID不能为空");
+        }
+
+        UserExamEntity entity = userExamMapper.selectOne(
+                new LambdaQueryWrapper<UserExamEntity>()
+                        .eq(UserExamEntity::getId, userExamId)
+                        .eq(UserExamEntity::getStudyUserId, studyUserId));
+
+        return toResponse(entity);
+    }
+
     private UserExamEntity findInitial(String studyUserId) {
         LambdaQueryWrapper<UserExamEntity> wrapper =
                 new LambdaQueryWrapper<>();

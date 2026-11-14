@@ -13,6 +13,6 @@ import java.util.Map;
 @FeignClient(name = "study-exam-service", url = "${studyExam.host}")
 public interface StudyExamApiService {
 
-    @GetMapping("/exam/user/initialized")
+    @GetMapping("/api/studyExam/user/initialized")
     ResultMode<Map<String, Boolean>> initialized(@RequestHeader("X-Study-User-Id") String studyUserId);
 }
