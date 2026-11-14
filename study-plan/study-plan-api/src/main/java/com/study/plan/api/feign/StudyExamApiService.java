@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "study-exam-service", url = "${studyExam.host}")
 public interface StudyExamApiService {
 
-    @GetMapping("/api/studyExam/getUserExam")
+    @GetMapping("/api/studyExam/user/getUserExam")
     UserExamResponse getUserExam(@RequestParam Long userExamId);
 }

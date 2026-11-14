@@ -156,11 +156,17 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             throw new IllegalArgumentException("考试项目不能为空");
         }
 
-        UserExamResponse result =
+        UserExamResponse exam =
                 studyExamApiService.getUserExam(userExamId);
 
+        if (exam == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "考试项目不存在"
+            );
+        }
 
-        return result;
+        return exam;
     }
 
     private void validatePlan(

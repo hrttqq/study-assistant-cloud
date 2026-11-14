@@ -19,17 +19,17 @@ public class StudyExamApiController {
     @Autowired
     private UserExamService userExamService;
 
-    @GetMapping("/initialized")
-    public Map<String, Boolean> initialized(@RequestParam String userId) {
+    @GetMapping("/user/initialized")
+    public Map<String, Boolean> initialized(@RequestParam String studyUserId) {
 
         Map<String, Boolean> result = Map.of(
                 "initialized",
-                userExamService.isInitialized(userId)
+                userExamService.isInitialized(studyUserId)
         );
         return result;
     }
 
-    @PostMapping("/getUserExam")
+    @PostMapping("/user/getUserExam")
     UserExamResponse getUserExam(@RequestParam Long userExamId) {
         return userExamService.getById(userExamId);
     }
