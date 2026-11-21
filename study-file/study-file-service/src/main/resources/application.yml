@@ -5,6 +5,45 @@ spring:
   application:
     name: study-file
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 55MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR}
+
+# MyBatis-Plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# 七牛云
+study:
+  file:
+    qiniu:
+      access-key: ${QINIU_ACCESS_KEY}
+      secret-key: ${QINIU_SECRET_KEY}
+      bucket: ${QINIU_BUCKET}
+      domain: ${QINIU_DOMAIN}
+      download-expire-seconds: 300
+      max-file-size: 52428800
+
 management:
   endpoints:
     web:
